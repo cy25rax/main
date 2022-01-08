@@ -1,10 +1,10 @@
 public class Person {
-    public String fio;
-    public String position;
-    public String email;
-    public int tel;
-    public int salary;
-    public int age;
+    private String fio;
+    private String position;
+    private String email;
+    private int tel;
+    private int salary;
+    private int age;
 
     public Person (String fio, String position, String email, int tel, int salary, int age){
         this.fio=fio;
@@ -28,5 +28,16 @@ public class Person {
             }
         }
     }
+
+    public void Info(){
+        System.out.println(this.fio);
+        System.out.println(this.position);
+        System.out.println(this.email);
+        System.out.println(this.tel);
+        System.out.println(this.salary);
+        System.out.println(this.age);
+        System.out.println();
+    }
+
 
 }

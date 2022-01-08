@@ -7,7 +7,14 @@ public class HomeWork05 {
         persArray[3] = new Person("Аракумов Аркадий","охранник","BBB@mail.ru",964000004,15000,57);
         persArray[4] = new Person("Христофоров Кирилл","механие","kluch@mail.ru",964000005,40000,25);
 
-        Person.ShowPersonUpAge(persArray,30);
+
+        int age=50;
+        System.out.println("\nсотрудники старше "+age+" лет\n");
+        Person.ShowPersonUpAge(persArray,age);
+
+
+        System.out.println("\nинформация о 5 сотруднике\n");
+        persArray[4].Info();
 
     }
 }
