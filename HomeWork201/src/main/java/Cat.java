@@ -19,6 +19,6 @@ public class Cat {
 
     public void info () {
         System.out.println();
-        System.out.print("кот "+this.name+" может прыгнуть на высоту "+jumpRange+" может пробежать "+runRange);
+        System.out.print("кот "+this.name+" может прыгнуть на высоту "+this.jumpRange+" может пробежать "+this.runRange);
     }
 }

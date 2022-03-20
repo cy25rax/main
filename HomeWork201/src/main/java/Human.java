@@ -19,6 +19,6 @@ public class Human {
 
     public void info () {
         System.out.println();
-        System.out.print("человек "+this.name+" может прыгнуть на высоту "+jumpRange+" может пробежать "+runRange);
+        System.out.print("человек "+this.name+" может прыгнуть на высоту "+this.jumpRange+" может пробежать "+this.runRange);
     }
 }
