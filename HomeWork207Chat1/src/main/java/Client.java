@@ -11,11 +11,31 @@ public class Client {
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
+    private boolean loggedIn = false;
 
     public void openConnection() throws IOException {
         socket = new Socket(SERVER_ADDR, SERVER_PORT);
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
+        new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try {
+                    Thread.sleep(15000);
+                    if (loggedIn==false) {
+                        out.writeUTF("/end");
+                        System.out.println("попробуйте в следующий раз");
+                        closeConnection();
+                    }
+                    System.out.println("2й поток сработал (закрылся через 15 секунд)");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -25,6 +45,8 @@ public class Client {
                         if (strFromServer.equalsIgnoreCase("/end")) {
                             break;
                         }
+
+                        if (strFromServer.startsWith("/authok")) loggedIn=true;
 
                         System.out.println(strFromServer);
                     }

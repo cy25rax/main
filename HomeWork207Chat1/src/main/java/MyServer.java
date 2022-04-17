@@ -47,6 +47,8 @@ public class MyServer {
             }
         }
     }
+
+до
     public synchronized void unsubscribe(ClientHandler o) {
         clients.remove(o);
     }
