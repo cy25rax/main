@@ -18,15 +18,15 @@ public class ClientHandler {
         return name;
     }
     public ClientHandler(MyServer myServer, Socket socket) {
-
-
         try {
             this.myServer = myServer;
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
             this.name = "";
-            new Thread(() -> {
+            ExecutorService executorService = Executors.newFixedThreadPool(4);
+            executorService.execute(() -> {
+//            new Thread(() -> {
                 try {
                     authentication();
 //                    file = new File("logfile_"+name+".txt");
@@ -39,7 +39,9 @@ public class ClientHandler {
                 } finally {
                     closeConnection();
                 }
-            }).start();
+//            }).start();
+            });
+            executorService.shutdown();
         } catch (IOException e) {
             throw new RuntimeException("Проблемы при создании обработчика клиента");
         }

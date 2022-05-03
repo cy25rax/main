@@ -15,8 +15,7 @@ public class MyServer {
     }
     public MyServer() {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
-        executorService.execute(() -> {
+
         try (ServerSocket server = new ServerSocket(PORT)) {
             authService = new BaseAuthService();
             authService.start();
@@ -36,8 +35,7 @@ public class MyServer {
                 authService.stop();
             }
         }
-        });
-        executorService.shutdown();
+
 
     }
     public synchronized boolean isNickBusy(String nick) {
