@@ -9,7 +9,9 @@ public class Road extends Stage {
             System.out.println(c.getName() + " начал этап: " + description);
             Thread.sleep(length / c.getSpeed() * 1000);
 
+// берем ЛОК чтобы выпонить сразу проврку на победу
             c.getLock().lock();
+
 
             System.out.println(c.getName() + " закончил этап: " + description);
         } catch (InterruptedException e) {
