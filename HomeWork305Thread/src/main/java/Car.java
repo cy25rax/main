@@ -58,7 +58,7 @@ public class Car implements Runnable {
 
             // если препятствие было Туннелем отдаем семафор
             if (race.getStages().get(i) instanceof Tunnel) {
-                Tunnel.getSemaphore().release();
+                race.getStages().get(i).getSemaphore().release();
             }
         }
 

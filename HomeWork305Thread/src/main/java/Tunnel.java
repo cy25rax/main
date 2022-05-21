@@ -1,15 +1,10 @@
 import java.util.concurrent.Semaphore;
 
 public class Tunnel extends Stage {
-    private static Semaphore semaphore ;
     public Tunnel(int CARS_COUNT) {
         this.length = 80;
         this.description = "Тоннель " + length + " метров";
-        semaphore = new Semaphore(CARS_COUNT/2);
-    }
-
-    public static Semaphore getSemaphore() {
-        return semaphore;
+        this.semaphore = new Semaphore(CARS_COUNT/2);
     }
 
     @Override
