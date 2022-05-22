@@ -1,0 +1,11 @@
+INFO  2022-05-22 15:54:05 [pool-2-thread-1] ClientHandler (ClientHandler.java:65) - пользователь nick1 авторизовался
+INFO  2022-05-22 15:54:15 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : 121
+INFO  2022-05-22 15:54:21 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : 1234
+INFO  2022-05-22 15:54:26 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : 12
+INFO  2022-05-22 15:54:32 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : 11
+INFO  2022-05-22 15:55:41 [pool-2-thread-1] ClientHandler (ClientHandler.java:65) - пользователь nick1 авторизовался
+INFO  2022-05-22 15:55:46 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : 123
+INFO  2022-05-22 15:55:55 [pool-2-thread-1] ClientHandler (ClientHandler.java:88) - пользователь nick1 отправил сообщение : asihjsghjhopiucx
+INFO  2022-05-22 15:56:10 [pool-3-thread-1] ClientHandler (ClientHandler.java:65) - пользователь 2nick авторизовался
+INFO  2022-05-22 15:56:19 [pool-3-thread-1] ClientHandler (ClientHandler.java:88) - пользователь 2nick отправил сообщение : ksljhb
+INFO  2022-05-22 15:56:25 [pool-3-thread-1] ClientHandler (ClientHandler.java:88) - пользователь 2nick отправил сообщение : 2 ohgohaog

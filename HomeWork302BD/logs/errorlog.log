@@ -1,0 +1,8 @@
+WARN  2022-05-22 15:54:41 [pool-2-thread-1] ClientHandler (ClientHandler.java:39) - java.net.SocketException: Connection reset
+WARN  2022-05-22 15:54:41 [pool-2-thread-1] ClientHandler (ClientHandler.java:123) - java.net.SocketException: Connection reset by peer
+WARN  2022-05-22 15:56:29 [pool-3-thread-1] ClientHandler (ClientHandler.java:39) - java.net.SocketException: Connection reset
+WARN  2022-05-22 15:56:29 [pool-3-thread-1] ClientHandler (ClientHandler.java:40) - 2asdasf
+WARN  2022-05-22 15:56:29 [pool-3-thread-1] ClientHandler (ClientHandler.java:123) - java.net.SocketException: Connection reset by peer
+WARN  2022-05-22 15:56:33 [pool-2-thread-1] ClientHandler (ClientHandler.java:39) - java.net.SocketException: Connection reset
+WARN  2022-05-22 15:56:33 [pool-2-thread-1] ClientHandler (ClientHandler.java:40) - 2asdasf
+WARN  2022-05-22 15:56:33 [pool-2-thread-1] ClientHandler (ClientHandler.java:123) - java.net.SocketException: Connection reset by peer
