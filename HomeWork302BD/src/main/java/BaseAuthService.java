@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class BaseAuthService implements AuthService {
+public class BaseAuthService extends Logger implements AuthService {
 
     @Override
     public void start() {
@@ -21,6 +21,7 @@ public class BaseAuthService implements AuthService {
                statement.executeUpdate();
            }
       }catch (Exception e) {
+           getErrorLog().warn(e);
            e.printStackTrace();
        }
     }
@@ -38,6 +39,7 @@ public class BaseAuthService implements AuthService {
                 return resultSet.getString("nick");
             }
         } catch (Exception e) {
+            getErrorLog().warn(e);
             e.printStackTrace();
         }
 
