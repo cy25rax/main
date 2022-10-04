@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
 public class CloudMainController implements Initializable {
     public ListView<String> clientView;
     public ListView<String> serverView;
+    public TextField textField;
     private String currentDirectory;
 
     private Network<ObjectDecoderInputStream, ObjectEncoderOutputStream> network;
@@ -79,7 +81,8 @@ public class CloudMainController implements Initializable {
         needReadMessages = true;
         factory = new DaemonThreadFactory();
         initNetwork();
-        setCurrentDirectory(System.getProperty("user.home")+"\\IdeaProjects\\GB_3_repo\\client_files");
+        setCurrentDirectory(
+                System.getProperty("user.home")+"\\IdeaProjects\\GB_3_repo — копия — копия\\client_files");
         fillView(clientView, getFiles(currentDirectory));
         clientView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -130,4 +133,31 @@ public class CloudMainController implements Initializable {
         return List.of();
     }
 
+    public void renameFile(ActionEvent actionEvent) throws IOException {
+        if (clientView.getSelectionModel().getSelectedItem() != null) {
+            String fileName = clientView.getSelectionModel().getSelectedItem();
+            File file1 = new File(currentDirectory+"\\"+clientView.getSelectionModel().getSelectedItem());
+            File file2 = new File(currentDirectory+"\\"+ textField.getText());
+            file1.renameTo(file2);
+            fillView(clientView, getFiles(currentDirectory));
+        }
+        if (serverView.getSelectionModel().getSelectedItem() != null) {
+            String oldFileName = serverView.getSelectionModel().getSelectedItem();
+            String newFileName = textField.getText();
+            network.getOutputStream().writeObject(new RenameFile(oldFileName,newFileName));
+        }
+    }
+
+    public void deleteFile(ActionEvent actionEvent) throws IOException {
+        if (clientView.getSelectionModel().getSelectedItem() != null) {
+            String fileName = clientView.getSelectionModel().getSelectedItem();
+                Files.delete(Path.of(currentDirectory + "\\" +fileName));
+                fillView(clientView, getFiles(currentDirectory));
+        }
+        if (serverView.getSelectionModel().getSelectedItem() != null) {
+            String selected = serverView.getSelectionModel().getSelectedItem();
+            System.out.println(selected);
+                network.getOutputStream().writeObject(new DeleteFile(selected));
+        }
+    }
 }
