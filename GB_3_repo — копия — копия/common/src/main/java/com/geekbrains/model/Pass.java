@@ -3,34 +3,18 @@ package com.geekbrains.model;
 
 public class Pass implements CloudMessage {
 
-    private final String login;
-    private final String password;
-    private boolean in = false;
+    boolean pass;
 
-    public String getLogin() {
-        return login;
+    public boolean isPass() {
+        return pass;
     }
-
-    public boolean isIn() {
-        return in;
-    }
-
-    public Object setIn(boolean in) {
-        this.in = in;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Pass(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public Pass(boolean pass) {
+        this.pass = pass;
     }
 
     @Override
     public MessageType getType() {
         return MessageType.PASS;
     }
+
 }

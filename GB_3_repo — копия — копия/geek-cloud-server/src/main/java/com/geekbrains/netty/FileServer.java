@@ -1,6 +1,5 @@
 package com.geekbrains.netty;
 
-import com.geekbrains.netty.serial.FileHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

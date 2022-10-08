@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--        -->
+
+<AnchorPane prefHeight="241.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.sep22.geekcloudclient.PassWindow">
+    <children>
+        <Button fx:id="close" layoutX="114.0" cancelButton="true" layoutY="183.0" mnemonicParsing="false" onAction="#sendToServerLogin" prefHeight="37.0" prefWidth="140.0" text="confirm" />
+        <TextField fx:id="password" layoutX="170.0" layoutY="138.0" text="pass1" />
+        <TextField fx:id="login" layoutX="170.0" layoutY="88.0" text="login1" />
+        <Label layoutX="40.0" layoutY="138.0" prefHeight="25.0" prefWidth="111.0" text="Password" />
+        <Label layoutX="46.0" layoutY="88.0" prefHeight="25.0" prefWidth="111.0" text="Login" />
+    </children>
+</AnchorPane>

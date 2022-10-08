@@ -1,14 +1,11 @@
 package com.geekbrains.model;
 
-//import lombok.Getter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Getter
 public class ListMessage implements CloudMessage {
 
     private final List<String> files;

@@ -6,5 +6,8 @@ public enum MessageType {
     FILE,
     DELETE_FILE,
     RENAME_FILE,
-    PASS
+    PASS,
+    DIRECTORY,
+    UPDATE_MESSAGE,
+    LOGIN_PASSWORD;
 }

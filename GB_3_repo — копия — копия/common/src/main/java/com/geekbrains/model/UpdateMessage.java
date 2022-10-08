@@ -1,10 +1,7 @@
 package com.geekbrains.model;
 
-//import lombok.Getter;
-
 import java.io.IOException;
 
-//@Getter
 public class UpdateMessage implements CloudMessage {
 
     private final String fileName;
@@ -15,7 +12,7 @@ public class UpdateMessage implements CloudMessage {
 
     @Override
     public MessageType getType() {
-        return MessageType.FILE_REQUEST;
+        return MessageType.UPDATE_MESSAGE;
     }
 
     public String getName() {
