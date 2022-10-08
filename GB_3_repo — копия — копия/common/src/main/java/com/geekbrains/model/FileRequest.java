@@ -1,8 +1,8 @@
 package com.geekbrains.model;
 
-import lombok.Getter;
+//import lombok.Getter;
 
-@Getter
+//@Getter
 public class FileRequest implements CloudMessage {
 
     private final String fileName;
@@ -15,4 +15,9 @@ public class FileRequest implements CloudMessage {
     public MessageType getType() {
         return MessageType.FILE_REQUEST;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
 }

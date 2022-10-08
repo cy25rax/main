@@ -11,9 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class FileServer {
 
     public static void main(String[] args) {
@@ -34,7 +32,6 @@ public class FileServer {
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(8189).sync();
-            log.debug("Server is ready on port: " + 8189);
             channelFuture.channel().closeFuture().sync(); // block
         } catch (Exception e) {
             throw new RuntimeException(e);

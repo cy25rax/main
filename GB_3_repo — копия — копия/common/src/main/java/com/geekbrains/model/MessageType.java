@@ -5,5 +5,6 @@ public enum MessageType {
     FILE_REQUEST,
     FILE,
     DELETE_FILE,
-    RENAME_FILE
+    RENAME_FILE,
+    PASS
 }

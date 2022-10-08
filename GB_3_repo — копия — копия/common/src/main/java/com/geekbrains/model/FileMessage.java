@@ -1,12 +1,12 @@
 package com.geekbrains.model;
 
-import lombok.Getter;
+//import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Getter
+//@Getter
 public class FileMessage implements CloudMessage {
 
     private final String fileName;
@@ -23,4 +23,14 @@ public class FileMessage implements CloudMessage {
     public MessageType getType() {
         return MessageType.FILE;
     }
+
+    public String getFileName() {
+        return this.fileName;
+    }
+
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
 }

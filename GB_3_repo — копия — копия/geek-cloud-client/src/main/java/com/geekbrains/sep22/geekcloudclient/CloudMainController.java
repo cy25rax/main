@@ -1,6 +1,5 @@
 package com.geekbrains.sep22.geekcloudclient;
 
-import com.geekbrains.DaemonThreadFactory;
 import com.geekbrains.model.*;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
@@ -27,28 +26,25 @@ public class CloudMainController implements Initializable {
     public TextField textField;
     private String currentDirectory;
 
-    private Network<ObjectDecoderInputStream, ObjectEncoderOutputStream> network;
+    private ObjectDecoderInputStream objectDecoderInputStream;
+    private ObjectEncoderOutputStream objectEncoderOutputStream;
     
-    private Socket socket;
-
     private boolean needReadMessages = true;
-
-    private DaemonThreadFactory factory;
 
     public void downloadFile(ActionEvent actionEvent) throws IOException {
         String fileName = serverView.getSelectionModel().getSelectedItem();
-        network.getOutputStream().writeObject(new FileRequest(fileName));
+        objectEncoderOutputStream.writeObject(new FileRequest(fileName));
     }
 
     public void sendToServer(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
-        network.getOutputStream().writeObject(new FileMessage(Path.of(currentDirectory).resolve(fileName)));
+        objectEncoderOutputStream.writeObject(new FileMessage(Path.of(currentDirectory).resolve(fileName)));
     }
 
     private void readMessages() {
         try {
             while (needReadMessages) {
-                CloudMessage message = (CloudMessage) network.getInputStream().readObject();
+                CloudMessage message = (CloudMessage) objectDecoderInputStream.readObject();
                 if (message instanceof FileMessage fileMessage) {
                     Files.write(Path.of(currentDirectory).resolve(fileMessage.getFileName()), fileMessage.getBytes());
                     Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
@@ -64,13 +60,14 @@ public class CloudMainController implements Initializable {
 
     private void initNetwork() {
         try {
-            socket = new Socket("localhost", 8189);
-            network = new Network<>(
-                    new ObjectDecoderInputStream(socket.getInputStream()),
-                    new ObjectEncoderOutputStream(socket.getOutputStream())
-            );
-            factory.getThread(this::readMessages, "cloud-client-read-thread")
-                    .start();
+            Socket socket = new Socket("localhost", 8189);
+            objectDecoderInputStream = new ObjectDecoderInputStream(socket.getInputStream());
+            objectEncoderOutputStream = new ObjectEncoderOutputStream(socket.getOutputStream());
+            Thread thread = new Thread(this::readMessages);
+            thread.setDaemon(true);
+            thread.start();
+//            factory.getThread(this::readMessages, "cloud-client-read-thread")
+//                    .start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,10 +76,8 @@ public class CloudMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         needReadMessages = true;
-        factory = new DaemonThreadFactory();
         initNetwork();
-        setCurrentDirectory(
-                System.getProperty("user.home")+"\\IdeaProjects\\GB_3_repo — копия — копия\\client_files");
+        setCurrentDirectory(System.getProperty("user.home")+"\\IdeaProjects\\GB_3_repo — копия — копия\\client_files");
         fillView(clientView, getFiles(currentDirectory));
         clientView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -97,13 +92,11 @@ public class CloudMainController implements Initializable {
             if (mouseEvent.getClickCount() == 2) {
                 String selected = serverView.getSelectionModel().getSelectedItem();
                 try {
-                    network.getOutputStream().writeObject(
+                    objectEncoderOutputStream.writeObject(
                             new UpdateMessage(selected));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
     }
@@ -119,8 +112,6 @@ public class CloudMainController implements Initializable {
     }
 
     private List<String> getFiles(String directory) {
-        // file.txt 125 b
-        // dir [DIR]
         File dir = new File(directory);
         if (dir.isDirectory()) {
             String[] list = dir.list();
@@ -144,20 +135,20 @@ public class CloudMainController implements Initializable {
         if (serverView.getSelectionModel().getSelectedItem() != null) {
             String oldFileName = serverView.getSelectionModel().getSelectedItem();
             String newFileName = textField.getText();
-            network.getOutputStream().writeObject(new RenameFile(oldFileName,newFileName));
+            objectEncoderOutputStream.writeObject(new RenameFile(oldFileName,newFileName));
         }
     }
 
     public void deleteFile(ActionEvent actionEvent) throws IOException {
         if (clientView.getSelectionModel().getSelectedItem() != null) {
             String fileName = clientView.getSelectionModel().getSelectedItem();
-                Files.delete(Path.of(currentDirectory + "\\" +fileName));
-                fillView(clientView, getFiles(currentDirectory));
+            Files.delete(Path.of(currentDirectory + "\\" +fileName));
+            fillView(clientView, getFiles(currentDirectory));
         }
         if (serverView.getSelectionModel().getSelectedItem() != null) {
             String selected = serverView.getSelectionModel().getSelectedItem();
             System.out.println(selected);
-                network.getOutputStream().writeObject(new DeleteFile(selected));
+            objectEncoderOutputStream.writeObject(new DeleteFile(selected));
         }
     }
 }

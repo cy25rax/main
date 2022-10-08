@@ -1,10 +1,10 @@
 package com.geekbrains.model;
 
-import lombok.Getter;
+//import lombok.Getter;
 
 import java.io.IOException;
 
-@Getter
+//@Getter
 public class UpdateMessage implements CloudMessage {
 
     private final String fileName;
@@ -19,6 +19,10 @@ public class UpdateMessage implements CloudMessage {
     }
 
     public String getName() {
+        return fileName;
+    }
+
+    public Object getFileName() {
         return fileName;
     }
 }

@@ -1,6 +1,6 @@
 package com.geekbrains.model;
 
-import lombok.Getter;
+//import lombok.Getter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
+//@Getter
 public class ListMessage implements CloudMessage {
 
     private final List<String> files;
@@ -26,5 +26,9 @@ public class ListMessage implements CloudMessage {
     @Override
     public MessageType getType() {
         return MessageType.LIST;
+    }
+
+    public List<String> getFiles() {
+        return files;
     }
 }

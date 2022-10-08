@@ -1,12 +1,5 @@
 package com.geekbrains.model;
 
-import lombok.Getter;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-@Getter
 public class DeleteFile implements CloudMessage {
 
     private String fileName;
@@ -19,4 +12,9 @@ public class DeleteFile implements CloudMessage {
     public MessageType getType() {
         return MessageType.DELETE_FILE;
     }
+
+    public Object getFileName() {
+        return fileName;
+    }
+
 }

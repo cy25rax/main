@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 
+
+<?import javafx.scene.control.TextField?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geekbrains.sep22.geekcloudclient.CloudMainController">
     <ListView fx:id="clientView" layoutX="29.0" layoutY="35.0" prefHeight="338.0" prefWidth="252.0" />
     <ListView fx:id="serverView" layoutX="355.0" layoutY="35.0" prefHeight="338.0" prefWidth="252.0" />
     <Button layoutX="299.0" layoutY="111.0" mnemonicParsing="false" onAction="#sendToServer" prefHeight="36.0" prefWidth="37.0" text="&gt;" />
     <Button layoutX="299.0" layoutY="162.0" mnemonicParsing="false" onAction="#downloadFile" prefHeight="36.0" prefWidth="37.0" text="&lt;" />
-   <Button layoutX="68.0" layoutY="383.0" mnemonicParsing="false" onAction="#deleteFile" prefHeight="36.0" prefWidth="72.0" text="delete" />
-   <Button layoutX="170.0" layoutY="383.0" mnemonicParsing="false" onAction="#renameFile" prefHeight="36.0" prefWidth="72.0" text="rename" />
-   <TextField fx:id="textField" layoutX="281.0" layoutY="383.0" prefHeight="36.0" prefWidth="221.0" />
+    <Button layoutX="68.0" layoutY="383.0" mnemonicParsing="false" onAction="#deleteFile" prefHeight="36.0" prefWidth="72.0" text="delete" />
+    <Button layoutX="170.0" layoutY="383.0" mnemonicParsing="false" onAction="#renameFile" prefHeight="36.0" prefWidth="72.0" text="rename" />
+    <TextField fx:id="textField" layoutX="281.0" layoutY="383.0" prefHeight="36.0" prefWidth="221.0" />
 </AnchorPane>
