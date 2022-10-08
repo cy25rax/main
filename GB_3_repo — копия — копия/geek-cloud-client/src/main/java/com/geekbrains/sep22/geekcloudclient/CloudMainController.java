@@ -3,19 +3,16 @@ package com.geekbrains.sep22.geekcloudclient;
 import com.geekbrains.model.*;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,19 +26,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CloudMainController extends Application implements Initializable {
+public class CloudMainController implements Initializable {
     public ListView<String> clientView;
     public ListView<String> serverView;
     public TextField textField;
     private String currentDirectory;
-    private Stage stage;
+    private PassWindow scene2Controller;
+    private boolean isCorrectPass = false;
 
     private ObjectDecoderInputStream objectDecoderInputStream;
     private ObjectEncoderOutputStream objectEncoderOutputStream;
     
     private boolean needReadMessages = true;
-
-    private Alert alert;
 
     private static List<Path> paths = new ArrayList<>();
 
@@ -98,19 +94,10 @@ public class CloudMainController extends Application implements Initializable {
                 } else if (message instanceof Pass pass) {
                     if (pass.isPass()) {
                         System.out.println("correct pass");
-//                        alert = new Alert(Alert.AlertType.INFORMATION);
-//                        alert.setTitle("Information Dialog");
-//                        alert.setHeaderText("Look, an Information Dialog");
-//                        alert.setContentText("login & password is correct");
-//                        alert.showAndWait();
-                        stage.close();
+                        scene2Controller.setCorrect(true);
+                        isCorrectPass = true;
                     } else {
                         System.out.println("dont pass");
-//                        alert = new Alert(Alert.AlertType.INFORMATION);
-//                        alert.setTitle("Information Dialog");
-//                        alert.setHeaderText("Look, an Information Dialog");
-//                        alert.setContentText("login & password is Incorrect");
-//                        alert.showAndWait();
                     }
                 }
             }
@@ -140,20 +127,18 @@ public class CloudMainController extends Application implements Initializable {
             Parent root = loader.load();
 
             //Get controller of scene2
-            PassWindow scene2Controller = loader.getController();
+            scene2Controller = loader.getController();
             //Show scene 2 in new window
-            stage = new Stage();
+            Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.resizableProperty().setValue(Boolean.FALSE);
 //            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Second Window");
+            stage.setAlwaysOnTop(true);
             stage.show();
 
-            scene2Controller.setInputStream(objectDecoderInputStream);
             scene2Controller.setOutputStream(objectEncoderOutputStream);
-//            scene2Controller.readMessages();
-
         } catch (IOException ex) {
             System.err.println(ex);
         }
@@ -238,10 +223,5 @@ public class CloudMainController extends Application implements Initializable {
             System.out.println(selected);
             objectEncoderOutputStream.writeObject(new DeleteFile(selected));
         }
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-
     }
 }

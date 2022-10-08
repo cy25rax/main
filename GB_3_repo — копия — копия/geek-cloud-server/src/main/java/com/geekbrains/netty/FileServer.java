@@ -26,7 +26,8 @@ public class FileServer {
                             socketChannel.pipeline().addLast(
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
                                     new ObjectEncoder(),
-                                    new FileHandler()
+                                    new FileHandler(),
+                                    new AuthService()
                             );
                         }
                     });

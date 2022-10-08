@@ -1,13 +1,13 @@
 package com.geekbrains.sep22.geekcloudclient;
 
-import com.geekbrains.model.CloudMessage;
 import com.geekbrains.model.LoginAndPass;
-import com.geekbrains.model.Pass;
 import io.netty.handler.codec.serialization.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -19,54 +19,39 @@ public class PassWindow {
     private TextField password;
     @FXML
     private TextField login;
+    private boolean isCorrect = false;
+    private Alert alert;
 
-    private ObjectDecoderInputStream inputStream;
     private ObjectEncoderOutputStream outputStream;
 
-    public void setInputStream(ObjectDecoderInputStream inputStream) {
-        this.inputStream = inputStream;
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
     }
 
     public void setOutputStream(ObjectEncoderOutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
-    public void sendToServerLogin(ActionEvent actionEvent) throws IOException {
+    public void sendToServerLogin(ActionEvent actionEvent) throws IOException, InterruptedException {
         outputStream.writeObject(new LoginAndPass(login.getText(),password.getText()));
-//        Stage stage = (Stage) close.getScene().getWindow();
-//        stage.close();
-
+        Stage stage = (Stage) close.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
+        Thread.sleep(100);
+        if (isCorrect) {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("login & password is correct");
+            alert.showAndWait();
+            stage.close();
+        } else {
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("login & password is Incorrect");
+            alert.showAndWait();
+            stage.setAlwaysOnTop(true);
+        }
     }
-
-//    public void readMessages() {
-//        Runnable task = () -> {
-//            try {
-//                while (true) {
-//                    CloudMessage message = (CloudMessage) inputStream.readObject();
-//                    if (message instanceof Pass pass ) {
-//                        System.out.println(pass.getLogin());
-//                        System.out.println(pass.getPassword());
-//                        System.out.println("pass " + pass.isIn());
-//                        Stage stage = (Stage) close.getScene().getWindow();
-//                        stage.close();
-////                        alert = new Alert(Alert.AlertType.INFORMATION);
-////                        alert.setTitle("Information Dialog");
-////                        alert.setHeaderText("Look, an Information Dialog");
-////                        alert.setContentText("login & password is correct");
-////                        alert.showAndWait();
-//                    } else if (message instanceof Pass pass){
-//                        System.out.println("pass " + pass.isIn());
-////                        alert = new Alert(Alert.AlertType.INFORMATION);
-////                        alert.setTitle("Information Dialog");
-////                        alert.setHeaderText("Look, an Information Dialog");
-////                        alert.setContentText("login & password is INcorrect");
-////                        alert.showAndWait();
-//                    }
-//                }
-//            } catch (IOException | ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }        };
-//        Thread thread = new Thread(task);
-//        thread.start();
-//    }
 }
