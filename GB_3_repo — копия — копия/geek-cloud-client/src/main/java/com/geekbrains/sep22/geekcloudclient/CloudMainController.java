@@ -39,7 +39,7 @@ public class CloudMainController implements Initializable {
     
     private boolean needReadMessages = true;
 
-    private static List<Path> paths = new ArrayList<>();
+    private static List<Path> paths;
 
     public void downloadFile(ActionEvent actionEvent) throws IOException {
         String fileName = serverView.getSelectionModel().getSelectedItem();
@@ -49,20 +49,27 @@ public class CloudMainController implements Initializable {
     public void sendToServer(ActionEvent actionEvent) throws IOException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
         if (!Files.isDirectory(Path.of(currentDirectory).resolve(fileName))){
-//            System.out.println(Path.of(currentDirectory).resolve(fileName));
-            objectEncoderOutputStream.writeObject(new FileMessage(Path.of(currentDirectory).resolve(fileName)));
+            objectEncoderOutputStream.writeObject(
+                    new FileMessage(Path.of(currentDirectory).resolve(fileName),
+                            Path.of("")));
         } else {
-            System.out.println("folder");
-            Path myPath = Path.of(currentDirectory).resolve(fileName);
-            paths.add(myPath);
-            var paths = walk(myPath);
+            paths = new ArrayList<>();
+            Path myPath = Path.of(currentDirectory);
+            paths.add(Path.of(currentDirectory).resolve(fileName));
+            var paths = walk(Path.of(myPath + "\\" + fileName));
             paths.forEach(path -> {
-                System.out.println("folder " + path);
                 try {
-                    if (Files.isDirectory(path))
-                        objectEncoderOutputStream.writeObject(new DirectoryMessage(paths.get(0).relativize(path), paths.get(0)));
-                    else objectEncoderOutputStream.writeObject(new FileMessage(paths.get(0).relativize(path)));
-                } catch (IOException e) {
+                    if (Files.isDirectory(path)) {
+                        objectEncoderOutputStream.writeObject(
+                                new DirectoryMessage(myPath.relativize(path.toAbsolutePath())
+                                                            , myPath));
+                        Thread.sleep(200);
+                    } else {
+                        objectEncoderOutputStream.writeObject(
+                                new FileMessage(path, myPath.relativize(path)));
+                        Thread.sleep(200);
+                    }
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             });
@@ -93,11 +100,8 @@ public class CloudMainController implements Initializable {
                     Platform.runLater(() -> fillView(serverView, listMessage.getFiles()));
                 } else if (message instanceof Pass pass) {
                     if (pass.isPass()) {
-                        System.out.println("correct pass");
                         scene2Controller.setCorrect(true);
                         isCorrectPass = true;
-                    } else {
-                        System.out.println("dont pass");
                     }
                 }
             }
@@ -156,9 +160,10 @@ public class CloudMainController implements Initializable {
         clientView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 String selected = clientView.getSelectionModel().getSelectedItem();
-                File selectedFile = new File(currentDirectory + "/" + selected);
+                File selectedFile = new File(currentDirectory + "\\" + selected);
                 if (selectedFile.isDirectory()) {
-                    setCurrentDirectory(currentDirectory + "/" + selected);
+                    Path path = Path.of(currentDirectory + "\\" + selected).normalize();
+                    setCurrentDirectory(path.toString());
                 }
             }
         });

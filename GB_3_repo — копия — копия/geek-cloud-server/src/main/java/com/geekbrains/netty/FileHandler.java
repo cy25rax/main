@@ -32,7 +32,16 @@ public class FileHandler extends SimpleChannelInboundHandler<CloudMessage> {
         switch (cloudMessage.getType()){
             case FILE -> {
                 FileMessage fileMessage = (FileMessage) cloudMessage;
-                Files.write(serverDir.resolve(fileMessage.getName()), fileMessage.getBytes());
+                if (fileMessage.getPath().equals("")){
+                    Files.write(serverDir.resolve(fileMessage.getName()), fileMessage.getBytes());
+                } else {
+                    if (Files.exists(serverDir.resolve(fileMessage.getPath()).getParent())){
+                        Files.write(serverDir.resolve(fileMessage.getPath()), fileMessage.getBytes());
+                    } else {
+                        Files.createDirectories(serverDir.resolve(fileMessage.getPath()).getParent());
+                        Files.write(serverDir.resolve(fileMessage.getPath()), fileMessage.getBytes());
+                    }
+                }
                 ctx.writeAndFlush(new ListMessage(serverDir));
             }
             case LIST -> {
@@ -40,11 +49,13 @@ public class FileHandler extends SimpleChannelInboundHandler<CloudMessage> {
             }
             case FILE_REQUEST -> {
                 FileRequest fileRequest = (FileRequest) cloudMessage;
-                ctx.writeAndFlush(new FileMessage(serverDir.resolve(fileRequest.getFileName())));
+                ctx.writeAndFlush(new FileMessage(serverDir.resolve(fileRequest.getFileName()),
+                        serverDir.resolve(fileRequest.getFileName())));
             }
             case DIRECTORY -> {
                 DirectoryMessage directoryMessage = (DirectoryMessage) cloudMessage;
                 Files.createDirectories(serverDir.resolve(directoryMessage.getFileName()));
+                ctx.writeAndFlush(new ListMessage(serverDir));
             }
             case LOGIN_PASSWORD -> {
                 LoginAndPass pass = (LoginAndPass) cloudMessage;

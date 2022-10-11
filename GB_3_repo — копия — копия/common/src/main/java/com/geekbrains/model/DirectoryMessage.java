@@ -5,13 +5,13 @@ import java.nio.file.Path;
 
 public class DirectoryMessage implements CloudMessage{
 
-    private final Path fileName;
-    private final Path startDirectoryName;
+    private final String  fileName;
+    private final String  startDirectoryName;
 
 
     public DirectoryMessage(Path file, Path start) throws IOException {
-        fileName = file;
-        startDirectoryName = start;
+        fileName = file.toString();
+        startDirectoryName = start.toString();
     }
 
     @Override
@@ -19,11 +19,11 @@ public class DirectoryMessage implements CloudMessage{
         return MessageType.DIRECTORY;
     }
 
-    public Path getStartDirectoryName() {
+    public String  getStartDirectoryName() {
         return startDirectoryName;
     }
 
-    public Path getFileName() {
+    public String getFileName() {
         return this.fileName;
     }
 
