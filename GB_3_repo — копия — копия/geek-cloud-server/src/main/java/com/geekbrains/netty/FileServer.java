@@ -26,18 +26,19 @@ public class FileServer {
                             socketChannel.pipeline().addLast(
                                     new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
                                     new ObjectEncoder(),
-                                    new FileHandler(),
-                                    new AuthService()
+                                    new FileHandler()
                             );
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(8189).sync();
+            Auth.connect();
             channelFuture.channel().closeFuture().sync(); // block
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             auth.shutdownGracefully();
             worker.shutdownGracefully();
+            Auth.close();
         }
     }
 }

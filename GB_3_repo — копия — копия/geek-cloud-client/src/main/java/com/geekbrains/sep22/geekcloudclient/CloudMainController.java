@@ -13,18 +13,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class CloudMainController implements Initializable {
     public ListView<String> clientView;
@@ -33,6 +36,7 @@ public class CloudMainController implements Initializable {
     private String currentDirectory;
     private PassWindow scene2Controller;
     private boolean isCorrectPass = false;
+    private final Lock lock = new ReentrantLock();
 
     private ObjectDecoderInputStream objectDecoderInputStream;
     private ObjectEncoderOutputStream objectEncoderOutputStream;
@@ -46,12 +50,12 @@ public class CloudMainController implements Initializable {
         objectEncoderOutputStream.writeObject(new FileRequest(fileName));
     }
 
-    public void sendToServer(ActionEvent actionEvent) throws IOException {
+    public void sendToServer(ActionEvent actionEvent) throws IOException, InterruptedException {
         String fileName = clientView.getSelectionModel().getSelectedItem();
         if (!Files.isDirectory(Path.of(currentDirectory).resolve(fileName))){
-            objectEncoderOutputStream.writeObject(
-                    new FileMessage(Path.of(currentDirectory).resolve(fileName),
-                            Path.of("")));
+            sendFile(fileName, "");
+
+//            если отправлям папку то отправляем все файлы в папке
         } else {
             paths = new ArrayList<>();
             Path myPath = Path.of(currentDirectory);
@@ -63,17 +67,41 @@ public class CloudMainController implements Initializable {
                         objectEncoderOutputStream.writeObject(
                                 new DirectoryMessage(myPath.relativize(path.toAbsolutePath())
                                                             , myPath));
-                        Thread.sleep(200);
                     } else {
-                        objectEncoderOutputStream.writeObject(
-                                new FileMessage(path, myPath.relativize(path)));
-                        Thread.sleep(200);
+                        sendFile(path.toString(), myPath.relativize(path).toString());
                     }
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             });
         }
+    }
+
+    private void sendFile(String fileName,String fileNameParent) throws IOException, InterruptedException {
+        lock.lock();
+        byte[] byteArray = new byte[1024*32];
+        File file = Path.of(currentDirectory).resolve(fileName).toFile();
+        long s = file.length();
+        FileInputStream fis = new FileInputStream(file.getPath());
+        if (s == 0) {
+            objectEncoderOutputStream.writeObject(
+                    new FileMessage(Path.of(currentDirectory).resolve(fileName),
+                            Path.of(fileNameParent),
+                            fis.readAllBytes())
+            );
+        }
+        while (s > 0) {
+            int i = fis.read(byteArray);
+            objectEncoderOutputStream.writeObject(
+                    new FileMessage(Path.of(currentDirectory).resolve(fileName),
+                            Path.of(fileNameParent),
+                            byteArray)
+            );
+            s -= i;
+        }
+        fis.close();
+        Thread.sleep(100);
+        lock.unlock();
     }
 
     private static List<Path> walk(Path path) throws IOException {
@@ -92,16 +120,51 @@ public class CloudMainController implements Initializable {
         try {
             while (needReadMessages) {
                 CloudMessage message = (CloudMessage) objectDecoderInputStream.readObject();
-                System.out.println("mess " + message.getType());
-                if (message instanceof FileMessage fileMessage) {
-                    Files.write(Path.of(currentDirectory).resolve(fileMessage.getName()), fileMessage.getBytes());
-                    Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
-                } else if (message instanceof ListMessage listMessage) {
-                    Platform.runLater(() -> fillView(serverView, listMessage.getFiles()));
-                } else if (message instanceof Pass pass) {
-                    if (pass.isPass()) {
-                        scene2Controller.setCorrect(true);
-                        isCorrectPass = true;
+                switch (message.getType()){
+                    case FILE -> {
+                        if (isCorrectPass) {
+                            FileMessage fileMessage = (FileMessage) message;
+                            if (fileMessage.getPath().equals("")){
+                                Files.write(Path.of(currentDirectory).resolve(fileMessage.getName()),
+                                        fileMessage.getBytes(),
+                                        StandardOpenOption.CREATE,
+                                        StandardOpenOption.APPEND);
+                            } else {
+                                if (Files.exists(Path.of(currentDirectory).resolve(fileMessage.getPath()).getParent())){
+                                    Files.write(Path.of(currentDirectory).resolve(fileMessage.getPath()),
+                                            fileMessage.getBytes(),
+                                            StandardOpenOption.CREATE,
+                                            StandardOpenOption.APPEND);
+                                } else {
+                                    Files.createDirectories(Path.of(currentDirectory).resolve(fileMessage.getPath()).getParent());
+                                    Files.write(Path.of(currentDirectory).resolve(fileMessage.getPath()),
+                                            fileMessage.getBytes(),
+                                            StandardOpenOption.CREATE,
+                                            StandardOpenOption.APPEND);
+                                }
+                            }
+                            Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
+                        }
+                    }
+                    case LIST -> {
+                        if (isCorrectPass) {
+                            ListMessage listMessage = (ListMessage) message;
+                            Platform.runLater(() -> fillView(serverView, listMessage.getFiles()));
+                        }
+                    }
+                    case DIRECTORY -> {
+                        if (isCorrectPass) {
+                            DirectoryMessage directoryMessage = (DirectoryMessage) message;
+                            Files.createDirectories(Path.of(currentDirectory).resolve(directoryMessage.getFileName()));
+                            Platform.runLater(() -> fillView(clientView, getFiles(currentDirectory)));
+                        }
+                    }
+                    case PASS -> {
+                        Pass pass = (Pass) message;
+                        if (pass.isPass()) {
+                            scene2Controller.setCorrect(true);
+                            isCorrectPass = true;
+                        }
                     }
                 }
             }
