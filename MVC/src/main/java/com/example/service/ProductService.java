@@ -32,4 +32,14 @@ public class ProductService {
         return product;
     }
 
+    public List<Product> deleteById(int id) {
+        for (Product p:products){
+            if (p.getId() == id) {
+                products.remove(p);
+                return products;
+            }
+        }
+        return products;
+    }
+
 }

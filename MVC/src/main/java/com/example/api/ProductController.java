@@ -35,7 +35,18 @@ public class ProductController {
   public String addProduct(@RequestParam String name, @RequestParam int cost, Model model) {
     Product p = new Product(name, cost);
     productService.addProduct(p);
-//    products.add(p);
+
+    var products = productService.findAll();
+    model.addAttribute("productList", products);
+    return "products";
+  }
+
+  @GetMapping("/delete/{id}")
+  public String deleteProduct(@PathVariable int id, Model model) {
+
+    System.out.println(id);
+
+    productService.deleteById(id);
 
     var products = productService.findAll();
     model.addAttribute("productList", products);
