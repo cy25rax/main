@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Student list</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>COST</th>
+        <th>LINK</th>
+    </tr>
+    <tr th:each="p : ${productList}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.title}"></td>
+        <td th:text="${p.cost}"></td>
+        <td>
+            <a th:href="@{http://localhost:8180/products/{id}(id = ${p.getId()})}">Link</a>
+        </td>
+    </tr>
+</table>
+
+<h2>Add a product</h2>
+<form action="/products" method="POST">
+    Name: <input
+        type="text"
+        name="name"><br />
+    Cost: <input
+        type="number"
+        name="cost"><br />
+    <button type="submit">Add product</button>
+</form>
+</body>
+</html>
