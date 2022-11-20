@@ -1,0 +1,57 @@
+
+CREATE SCHEMA hib;
+
+
+
+CREATE TABLE hib.basket (
+    id bigint NOT NULL,
+    buyer_id bigint,
+    product_cost bigint,
+    product_name character varying(255)
+);
+
+
+CREATE TABLE hib.buyer (
+    id bigint NOT NULL,
+    name character varying(255)
+);
+
+
+CREATE TABLE hib.products (
+    id bigint NOT NULL,
+    title character varying(255),
+    cost integer
+);
+
+
+INSERT INTO hib.basket (id, buyer_id, product_cost, product_name) VALUES (1, 5, 10, 'lada');
+INSERT INTO hib.basket (id, buyer_id, product_cost, product_name) VALUES (2, 5, 15, 'lada');
+
+
+INSERT INTO hib.buyer (id, name) VALUES (5, 'John');
+INSERT INTO hib.buyer (id, name) VALUES (6, 'Maks');
+
+
+INSERT INTO hib.products (id, title, cost) VALUES (1, 'bmw', 15);
+INSERT INTO hib.products (id, title, cost) VALUES (2, 'lada', 10);
+INSERT INTO hib.products (id, title, cost) VALUES (3, 'bmw', 175);
+
+
+ALTER TABLE ONLY hib.basket
+    ADD CONSTRAINT basket_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY hib.buyer
+    ADD CONSTRAINT buyer_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY hib.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+CREATE INDEX fki_fk_buyer_id ON hib.basket USING btree (buyer_id);
+
+
+ALTER TABLE ONLY hib.basket
+    ADD CONSTRAINT fk_buyer_id FOREIGN KEY (buyer_id) REFERENCES hib.buyer(id) NOT VALID;
+
