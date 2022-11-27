@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ThemleafController {
@@ -23,6 +25,15 @@ public class ThemleafController {
     public String deleteById(@PathVariable Long id) {
         productRepositoryService.deleteById(id);
         return "redirect:/index";
+    }
+
+    @PostMapping("sort")
+    public String showSortedList(@RequestParam(required = false) Long minCost,
+                                 @RequestParam(required = false) Long maxCost, Model model) {
+
+        model.addAttribute("allProducts",
+                productRepositoryService.findByCostBetween(minCost, maxCost));
+        return "index";
     }
 
 }

@@ -41,6 +41,12 @@ public class ProductRepositoryService {
 
     @Transactional
     public List<Product> findByCostBetween(Long minCost, Long maxCost) {
+        if (minCost==null && maxCost!=null) return findByCostLessThanEqual(maxCost);
+        if (minCost!=null && maxCost==null) return findByCostGreaterThanEqual(minCost);
         return productRepository.findByCostBetween(minCost, maxCost);
+    }
+
+    private List<Product> findByCostGreaterThanEqual(Long minCost) {
+        return productRepository.findByCostGreaterThanEqual(minCost);
     }
 }
