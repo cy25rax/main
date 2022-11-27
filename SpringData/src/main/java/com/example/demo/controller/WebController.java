@@ -5,11 +5,12 @@ import com.example.demo.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-public class Controller {
+public class WebController {
 
     @Autowired
     ProductRepositoryService productRepositoryService;
@@ -19,14 +20,8 @@ public class Controller {
         return  productRepositoryService.findAll();
     }
 
-//    этот метод почему то не работает
     @GetMapping("/{id}")
     public Product findById(@PathVariable Long id) {
-//        эта строчка работает
-        Product product = productRepositoryService.getReferenceById(id);
-//        эта тоже работает все выводится в консоль
-        System.out.println(product);
-//        а эта уже не работает
         return productRepositoryService.getReferenceById(id);
     }
 

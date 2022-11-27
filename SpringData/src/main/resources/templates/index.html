@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot Thymeleaf Web Application</title>
+</head>
+<body>
+<h1>Список продуктов</h1>
+
+<!--<style type="text/css">-->
+<!--.table_outer { height: 15em; overflow: auto; }-->
+<!--</style>-->
+
+<!--<div class="table_outer">-->
+    <table>
+        <thead>
+        <tr>
+            <th> Id </th>
+            <th> Name </th>
+            <th> Price </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p: ${allProducts}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.title}"></td>
+            <td th:text="${p.cost}"></td>
+            <td>
+                <form action="#" th:action="@{'/delete/{id}'(id=${p.id})}" >
+                    <button type="submit" class="btn">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+<!--</div>-->
+
+
+</body>
+</html>
