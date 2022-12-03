@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.interfaces.ProductRepository;
 import com.example.demo.model.Product;
+import com.example.demo.service.specifications.ProductSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,8 +17,20 @@ public class ProductRepositoryService {
     private ProductRepository productRepository;
 
     @Transactional
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<Product> findAll(Integer minPrice, Integer maxPrice, String title) {
+        Specification<Product> specification = Specification.where(null);
+
+        if (minPrice != null) {
+            specification = specification.and(ProductSpecifications.findByCostGreaterThanEqual(minPrice));
+        }
+        if (maxPrice != null) {
+            specification = specification.and(ProductSpecifications.findByCostLessThanEqual(maxPrice));
+        }
+        if (title != null) {
+            specification = specification.and(ProductSpecifications.titleLike(title));
+        }
+
+        return productRepository.findAll(specification);
     }
 
     @Transactional
@@ -25,8 +39,8 @@ public class ProductRepositoryService {
     }
 
     @Transactional
-    public void save(Product product) {
-        productRepository.save(product);
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     @Transactional

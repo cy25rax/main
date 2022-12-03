@@ -15,17 +15,17 @@ public class FillDatabase {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillBase(){
-        productRepository.save(new Product("corolla", 10L));
-        productRepository.save(new Product("rx", 12L));
-        productRepository.save(new Product("crown", 20L));
-        productRepository.save(new Product("celsior", 25L));
-        productRepository.save(new Product("century", 30L));
-        productRepository.save(new Product("markII", 18L));
-        productRepository.save(new Product("chaser", 19L));
-        productRepository.save(new Product("alphard", 28L));
-        productRepository.save(new Product("tundra", 25L));
-        productRepository.save(new Product("land cruiser", 21L));
-        productRepository.save(new Product("majesta", 27L));
+        productRepository.save(new Product("corolla", 10L, "3s"));
+        productRepository.save(new Product("rx", 12L, "3s"));
+        productRepository.save(new Product("crown", 20L, "1jz"));
+        productRepository.save(new Product("celsior", 25L, "2uz"));
+        productRepository.save(new Product("century", 30L, "1gz"));
+        productRepository.save(new Product("markII", 18L, "1g"));
+        productRepository.save(new Product("chaser", 19L, "2jz"));
+        productRepository.save(new Product("alphard", 28L, "2gr"));
+        productRepository.save(new Product("tundra", 25L, "3ur"));
+        productRepository.save(new Product("land cruiser", 21L, "1ur"));
+        productRepository.save(new Product("majesta", 27L, "1uz"));
     }
 
 }

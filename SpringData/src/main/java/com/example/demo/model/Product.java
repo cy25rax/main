@@ -18,14 +18,18 @@ public class Product {
     @Column(name = "title")
     private String title;
 
-    public Product() {
-    }
-
     @Column(name = "cost")
     private Long cost;
 
-    public Product(String title, Long cost) {
+    @Column(name = "engine")
+    private String engine;
+
+    public Product(String title, Long cost, String engine) {
         this.title = title;
         this.cost = cost;
+        this.engine = engine;
+    }
+
+    public Product() {
     }
 }

@@ -1,54 +1,60 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Product;
+import com.example.demo.model.ProductDTO;
 import com.example.demo.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("v1/products")
 public class WebController {
 
     @Autowired
     ProductRepositoryService productRepositoryService;
 
     @GetMapping
-    public List<Product> findAll(){
-        return  productRepositoryService.findAll();
+    public Stream<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
+                                      @RequestParam(required = false) Integer maxCost,
+                                      @RequestParam(required = false) String title){
+        return  productRepositoryService.findAll(minCost, maxCost, title)
+                .stream().map(ProductDTO::new);
     }
 
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) {
-        return productRepositoryService.getReferenceById(id);
+    public ProductDTO findById(@PathVariable Long id) {
+        Product product = productRepositoryService.getReferenceById(id);
+        return new ProductDTO(product);
     }
 
-    @GetMapping ("/add")
-    public List<Product> addProduct(@RequestParam String title, @RequestParam Long cost){
-        Product product = new Product();
-        product.setTitle(title);
-        product.setCost(cost);
+    @PutMapping
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) {
+        Product product = productRepositoryService.getReferenceById(productDTO.getId());
+        product.setTitle(productDTO.getTitle());
+        product.setCost(productDTO.getCost());
         productRepositoryService.save(product);
-        return productRepositoryService.findAll();
+        return new ProductDTO(product);
     }
 
-    @GetMapping("delete/{id}")
-    public List<Product> deleteById (@PathVariable Long id){
+    @PostMapping
+    public ProductDTO addProduct(@RequestBody ProductDTO productDTO){
+        Product product = new Product();
+        product.setId(null);
+        product.setCost(productDTO.getCost());
+        product.setTitle(productDTO.getTitle());
+        productRepositoryService.save(product);
+        return new ProductDTO(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public Stream<ProductDTO> deleteById (@RequestParam(required = false) Integer minCost,
+                                          @RequestParam(required = false) Integer maxCost,
+                                          @RequestParam(required = false) String title,
+                                          @PathVariable Long id){
         productRepositoryService.deleteById(id);
-        return productRepositoryService.findAll();
+        return productRepositoryService.findAll(minCost, maxCost, title).stream().map(ProductDTO::new);
     }
 
-//    http://localhost:8050/products/below/20
-    @GetMapping("below/{cost}")
-    public List<Product> belowCost (@PathVariable Long cost){
-        return productRepositoryService.findByCostLessThanEqual(cost);
-    }
-
-//    http://localhost:8050/products/between?minCost=17&maxCost=26
-    @GetMapping("between")
-    public List<Product> betweenCost (@RequestParam Long minCost, @RequestParam Long maxCost){
-        return productRepositoryService.findByCostBetween(minCost, maxCost);
-    }
 }
