@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Cart;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductDTO;
 import com.example.demo.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
@@ -13,14 +15,16 @@ import java.util.stream.Stream;
 public class WebController {
 
     @Autowired
-    ProductRepositoryService productRepositoryService;
+    private ProductRepositoryService productRepositoryService;
+    @Autowired
+    private Cart cart;
 
     @GetMapping
-    public Stream<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
-                                      @RequestParam(required = false) Integer maxCost,
-                                      @RequestParam(required = false) String title){
+    public List<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
+                                    @RequestParam(required = false) Integer maxCost,
+                                    @RequestParam(required = false) String title){
         return  productRepositoryService.findAll(minCost, maxCost, title)
-                .stream().map(ProductDTO::new);
+                .stream().map(ProductDTO::new).toList();
     }
 
     @GetMapping("/{id}")
@@ -55,6 +59,14 @@ public class WebController {
                                           @PathVariable Long id){
         productRepositoryService.deleteById(id);
         return productRepositoryService.findAll(minCost, maxCost, title).stream().map(ProductDTO::new);
+    }
+
+    @PostMapping("cartAdd/{id}")
+    public List<ProductDTO> cartAdd(@PathVariable Long id) {
+        Product product = productRepositoryService.getReferenceById(id);
+        ProductDTO productDTO = new ProductDTO(product);
+        cart.addToCart(productDTO);
+        return cart.findAllCartProducts();
     }
 
 }
