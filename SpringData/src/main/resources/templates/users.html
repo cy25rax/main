@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot Thymeleaf Web Application</title>
+</head>
+<body>
+
+<h1>Authenticated user roles:</h1>
+<div sec:authentication="principal.authorities"></div>
+
+<h1>Список пользователей</h1>
+
+
+<table>
+    <thead>
+    <tr>
+        <th> Id</th>
+        <th> Name</th>
+        <th> Phone</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p: ${users}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.phone}"></td>
+        <td>
+            <div sec:authorize="hasRole('SUPERADMIN')">
+                <form action="#" th:action="@{'/{id}'(id=${p.id})}" method="post">
+                    <button type="submit" class="btn">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

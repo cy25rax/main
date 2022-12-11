@@ -17,10 +17,4 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 //
 //    @Query(value = "select * from products")
 //    List<Product> findBCostLessThen (Long cost);
-
-    List<Product> findByCostLessThanEqual (Long cost);
-
-    List<Product> findByCostBetween (Long minCost, Long maxCost);
-
-    List<Product> findByCostGreaterThanEqual(Long minCost);
 }
