@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @Controller
 public class ThymeleafController {
 
@@ -30,21 +33,11 @@ public class ThymeleafController {
         return "index";
     }
 
-//<form action="#" th:action="@{'/{id}'(id=${p.id})}" method="post">
-//    не могу тут указать метод delete в инете написано что тут может быть только пост или гет
     @PostMapping("/{id}")
     public String deleteById(@PathVariable Long id) {
+        System.out.println(id);
         productRepositoryService.deleteById(id);
         return "redirect:/index";
-    }
-
-    @PostMapping("sort")
-    public String showSortedList(@RequestParam(required = false) Long minCost,
-                                 @RequestParam(required = false) Long maxCost, Model model) {
-
-        model.addAttribute("allProducts",
-                productRepositoryService.findByCostBetween(minCost, maxCost));
-        return "index";
     }
 
     @PostMapping("cartAdd/{id}")
@@ -52,6 +45,17 @@ public class ThymeleafController {
         Product product = productRepositoryService.getReferenceById(id);
         ProductDTO productDTO = new ProductDTO(product);
         cart.addToCart(productDTO);
+        return "redirect:/index";
+    }
+
+    @PostMapping("cartDeleteProduct/{id}")
+    public String cartDeleteProduct (@PathVariable Long id) {
+        for (ProductDTO productDTO: cart.findAllCartProducts()) {
+            if (Objects.equals(productDTO.getId(), id)) {
+                cart.findAllCartProducts().remove(productDTO);
+                break;
+            }
+        }
         return "redirect:/index";
     }
 

@@ -79,7 +79,7 @@
         <td th:text="${c.title}"></td>
         <td th:text="${c.cost}"></td>
         <td>
-            <form action="#" th:action="@{'cartDelete/{id}'(id=${p.id})}" method="post">
+            <form action="#" th:action="@{'cartDeleteProduct/{id}'(id=${c.id})}" method="post">
                 <button type="submit" class="btn" >
                     Delete
                 </button>
