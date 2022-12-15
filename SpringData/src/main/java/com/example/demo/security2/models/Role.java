@@ -1,8 +1,9 @@
-package com.example.demo.sexurity.models;
+package com.example.demo.security2.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 @Data
 @Entity

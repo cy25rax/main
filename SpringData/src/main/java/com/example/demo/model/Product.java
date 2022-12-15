@@ -1,9 +1,10 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 @Data
 @Entity

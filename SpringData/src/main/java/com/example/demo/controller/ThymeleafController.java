@@ -29,7 +29,7 @@ public class ThymeleafController {
         model.addAttribute("cart",
                 cart.findAllCartProducts());
 
-        return "index1";
+        return "index";
     }
 
     @PostMapping("/{id}")
