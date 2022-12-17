@@ -16,8 +16,6 @@ public class WebController {
 
     @Autowired
     private ProductRepositoryService productRepositoryService;
-    @Autowired
-    private Cart cart;
 
     @GetMapping
     public List<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
@@ -59,14 +57,6 @@ public class WebController {
                                           @PathVariable Long id){
         productRepositoryService.deleteById(id);
         return productRepositoryService.findAll(minCost, maxCost, title).stream().map(ProductDTO::new);
-    }
-
-    @PostMapping("cartAdd/{id}")
-    public List<ProductDTO> cartAdd(@PathVariable Long id) {
-        Product product = productRepositoryService.getReferenceById(id);
-        ProductDTO productDTO = new ProductDTO(product);
-        cart.addToCart(productDTO);
-        return cart.findAllCartProducts();
     }
 
 }

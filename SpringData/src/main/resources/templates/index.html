@@ -25,14 +25,14 @@
                         <td th:text="${p.title}"></td>
                         <td th:text="${p.cost}"></td>
                         <td>
-                            <form action="#" th:action="@{'/{id}'(id=${p.id})}" method="post">
+                            <form action="#" th:action="@{'index/{id}'(id=${p.id})}" method="post">
                                 <button type="submit" class="btn" >
                                     Delete
                                 </button>
                             </form>
                         </td>
                         <td>
-                            <form action="#" th:action="@{'cartAdd/{id}'(id=${p.id})}" method="post">
+                            <form action="#" th:action="@{'index/cartAdd/{id}'(id=${p.id})}" method="post">
                                 <button type="submit" class="btn" >
                                     Add to cart
                                 </button>
@@ -79,7 +79,7 @@
         <td th:text="${c.title}"></td>
         <td th:text="${c.cost}"></td>
         <td>
-            <form action="#" th:action="@{'cartDeleteProduct/{id}'(id=${c.id})}" method="post">
+            <form action="#" th:action="@{'index/cart/deleteProduct/{id}'(id=${c.id})}" method="post">
                 <button type="submit" class="btn" >
                     Delete
                 </button>
