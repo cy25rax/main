@@ -1,0 +1,79 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+    <h1>Market</h1>
+
+    <h3>Список товаров</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Название</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in productsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+                <!--                <button type="button" class="btn btn-primary" ng-click="showProductInfo(p.id)">Info</button>-->
+                <!--                <button type="button" class="btn btn-danger" ng-click="deleteProductById(p.id)">Delete</button>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <h3>Корина</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <button type="button" class="btn btn-primary" ng-click="eraseCart(1)">Очистить корзину</button>
+        </tr>
+        <tr>
+            <td>Название</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="item in cart.cartItemList">
+<!--                    <tr ng-repeat="item in cart">-->
+            <td>{{item.productTitle}}</td>
+            <td>{{item.quantity}}</td>
+            <td>
+                <button type="button" class="btn btn-info" ng-click="addQuantity(item.productId, 1)">+</button>
+                <button type="button" class="btn btn-info" ng-click="addQuantity(item.productId, -1)">-</button>
+            </td>
+            <td>{{item.cost}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="deleteCartItem(item.productId)">Удалить из корзины
+                </button>
+            </td>
+            <!--            <td>{{item.productTitle}}</td>-->
+            <!--            <td>{{item.quantity}}</td>-->
+            <!--            <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>-->
+        </tr>
+        <tr>
+            <td>Итого</td>
+            <td></td>
+            <td>{{cart.totalCost}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Cart;
-import com.example.demo.model.Product;
 import com.example.demo.model.ProductDTO;
 import com.example.demo.service.CartService;
 import com.example.demo.service.ProductRepositoryService;
@@ -19,15 +18,29 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/add/{id}")
-    public List<ProductDTO> cartAdd(@PathVariable Long id) {
-        cartService.addToCart(id);
+    @GetMapping
+    public Cart showCart(){
         return cartService.findAllCartProducts();
     }
 
-    @GetMapping("/deleteProduct/{id}")
-    public List<ProductDTO> deleteProduct(@PathVariable Long id) {
+    @GetMapping("/add/{id}")
+    public void cartAdd(@PathVariable Long id) {
+        cartService.addToCart(id);
+    }
+
+    @GetMapping("/deleteCartItem/{id}")
+    public void deleteCartItem(@PathVariable Long id) {
         cartService.deleteProduct(id);
-        return cartService.findAllCartProducts();
+    }
+
+    @GetMapping("/eraseCart")
+    public void eraseCart() {
+        cartService.eraseCart();
+    }
+
+    @GetMapping("/addQuantity/{id}")
+    public void addQuantity(@PathVariable Long id,
+                            @RequestParam int quantity) {
+        cartService.addQuantity(id, quantity);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Cart;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductDTO;
 import com.example.demo.service.ProductRepositoryService;
@@ -16,8 +15,6 @@ public class Web2Controller {
 
     @Autowired
     private ProductRepositoryService productRepositoryService;
-    @Autowired
-    private Cart cart;
 
     @GetMapping
     public List<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
@@ -59,14 +56,6 @@ public class Web2Controller {
                                           @PathVariable Long id){
         productRepositoryService.deleteById(id);
         return productRepositoryService.findAll(minCost, maxCost, title).stream().map(ProductDTO::new);
-    }
-
-    @PostMapping("cartAdd/{id}")
-    public List<ProductDTO> cartAdd(@PathVariable Long id) {
-        Product product = productRepositoryService.getReferenceById(id);
-        ProductDTO productDTO = new ProductDTO(product);
-        cart.addToCart(productDTO);
-        return cart.findAllCartProducts();
     }
 
 }

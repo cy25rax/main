@@ -1,33 +1,69 @@
 package com.example.demo.model;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@Data
 public class Cart {
-    private List<ProductDTO> productDTOList;
+    private List<CartItem> cartItemList;
+    private Long totalCost;
 
-    @PostConstruct
-    public void init () {
-        productDTOList = new ArrayList<>();
+    public Cart() {
+        this.cartItemList = new ArrayList<>();
     }
 
     public void addToCart (ProductDTO productDTO){
-        productDTOList.add(productDTO);
+        for (CartItem cartItem:cartItemList) {
+            if (cartItem.getProductId() == productDTO.getId()) {
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
+                recalculateTotalCost();
+                return;
+            }
+        }
+        CartItem cartItem = new CartItem(productDTO.getId(),
+                productDTO.getTitle(),
+                1,
+                productDTO.getCost(),
+                productDTO.getCost());
+        cartItemList.add(cartItem);
+        recalculateTotalCost();
     }
 
-    public List<ProductDTO> findAllCartProducts () {
-        return productDTOList;
+    private void recalculateTotalCost() {
+        totalCost = 0L;
+        for (CartItem cartItem:cartItemList) {
+            totalCost += cartItem.getCost() * cartItem.getQuantity();
+        }
+    }
+
+    public List<CartItem> findAllCartProducts () {
+        return cartItemList;
     }
 
     public void deleteProductFromCart(Long id) {
-        for (ProductDTO productDTO: productDTOList) {
-            if (Objects.equals(productDTO.getId(), id)) {
-                productDTOList.remove(productDTO);
+        for (CartItem cartItem:cartItemList) {
+            if (Objects.equals(cartItem.getProductId(), id)) {
+                cartItemList.remove(cartItem);
+                recalculateTotalCost();
+                break;
+            }
+        }
+    }
+
+    public void eraseCart() {
+        cartItemList = new ArrayList<>();
+        totalCost = 0L;
+    }
+
+    public void addQuantity(Long id, int quantity) {
+        for (CartItem cartItem:cartItemList) {
+            if (Objects.equals(cartItem.getProductId(), id)) {
+                if (cartItem.getQuantity() == 1) return;
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                recalculateTotalCost();
                 break;
             }
         }
