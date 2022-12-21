@@ -41,4 +41,8 @@ public class CartService {
     public void addQuantity(Long id, int quantity) {
         cart.addQuantity(id, quantity);
     }
+
+    public Long totalCost () {
+        return cart.getTotalCost();
+    }
 }

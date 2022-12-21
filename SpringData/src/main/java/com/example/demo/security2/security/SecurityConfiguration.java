@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,9 +38,9 @@ public class SecurityConfiguration {
                 .requestMatchers("/**").permitAll()
 //                .requestMatchers("/index/**").permitAll()
 //                .requestMatchers("/index").permitAll()
-//                .requestMatchers("/v1/**").permitAll()
-                .requestMatchers("/v2/**").authenticated()
-                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/v1/*").authenticated()
+//                .requestMatchers("/v2/**").authenticated()
+//                .requestMatchers("/api/**").authenticated()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -55,6 +56,11 @@ public class SecurityConfiguration {
 //                .build();
 //
 //        return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

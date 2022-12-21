@@ -10,11 +10,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class DatabaseUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -40,7 +42,11 @@ public class DatabaseUserDetailsService implements UserDetailsService {
                 SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
+    public User findByUserName(String userName) {
+        return userRepository.findByName(userName);
+    }
+
+    public Long findUserIDByName(String userName) {
+        return userRepository.findUserIdByName(userName);
     }
 }

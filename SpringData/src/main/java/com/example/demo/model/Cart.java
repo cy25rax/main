@@ -39,7 +39,7 @@ public class Cart {
         }
     }
 
-    public List<CartItem> findAllCartProducts () {
+    public List<CartItem> findAllCartItems () {
         return cartItemList;
     }
 
@@ -61,7 +61,7 @@ public class Cart {
     public void addQuantity(Long id, int quantity) {
         for (CartItem cartItem:cartItemList) {
             if (Objects.equals(cartItem.getProductId(), id)) {
-                if (cartItem.getQuantity() == 1) return;
+                if (cartItem.getQuantity() == 1 && quantity == -1) return;
                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
                 recalculateTotalCost();
                 break;

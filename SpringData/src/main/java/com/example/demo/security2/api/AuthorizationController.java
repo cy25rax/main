@@ -1,5 +1,6 @@
 package com.example.demo.security2.api;
 
+import com.example.demo.security2.models.StringResponse;
 import com.example.demo.security2.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,10 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @RestController
 public class AuthorizationController {
@@ -36,6 +37,12 @@ public class AuthorizationController {
         } catch (AuthenticationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
+    }
+
+    @GetMapping("/auth")
+    public StringResponse authCheck(Principal principal) {
+        System.out.println(principal.getName());
+        return new StringResponse(principal.getName());
     }
 
 }
