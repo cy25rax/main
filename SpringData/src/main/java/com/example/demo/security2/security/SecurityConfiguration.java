@@ -35,12 +35,8 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/**").permitAll()
-//                .requestMatchers("/index/**").permitAll()
-//                .requestMatchers("/index").permitAll()
-                .requestMatchers("/v1/*").authenticated()
-//                .requestMatchers("/v2/**").authenticated()
-//                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/v1/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
