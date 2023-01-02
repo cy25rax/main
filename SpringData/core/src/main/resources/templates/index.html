@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot Thymeleaf Web com.example.cart.CartApplication</title>
+</head>
+<body>
+<h1>Список продуктов</h1>
+
+<table align="center">
+    <tr>
+        <td>
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th> Id </th>
+                        <th> Name </th>
+                        <th> Price </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p: ${allProducts}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.title}"></td>
+                        <td th:text="${p.cost}"></td>
+                        <td>
+                            <form action="#" th:action="@{'index/{id}'(id=${p.id})}" method="post">
+                                <button type="submit" class="btn" >
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{'index/cartAdd/{id}'(id=${p.id})}" method="post">
+                                <button type="submit" class="btn" >
+                                    Add to cart
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+        <td>
+            <div>
+                <h2>Отсортировать</h2>
+                <form action="index" method="get">
+                    Мин цена: <input
+                        type="number"
+                        name="minCost"><br />
+                    Макс цена: <input
+                        type="number"
+                        name="maxCost"><br />
+                    Название товара: <input
+                        type="text"
+                        name="title"><br />
+                    <button type="submit">Показать</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<h1>Корзина</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th> Id </th>
+        <th> Name </th>
+        <th> Price </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c: ${cart}">
+        <td th:text="${c.id}"></td>
+        <td th:text="${c.title}"></td>
+        <td th:text="${c.cost}"></td>
+        <td>
+            <form action="#" th:action="@{'index/cart/deleteProduct/{id}'(id=${c.id})}" method="post">
+                <button type="submit" class="btn" >
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
