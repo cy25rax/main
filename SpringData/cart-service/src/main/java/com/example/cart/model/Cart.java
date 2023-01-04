@@ -15,11 +15,12 @@ public class Cart {
 
     public Cart() {
         this.cartItemList = new ArrayList<>();
+        this.totalCost = new BigDecimal(0);
     }
 
     public void addToCart (ProductDTO productDTO){
         for (CartItem cartItem:cartItemList) {
-            if (cartItem.getProductId() == productDTO.getId()) {
+            if (cartItem.getProductId().equals(productDTO.getId())) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 recalculateTotalCost();
                 return;
@@ -37,12 +38,10 @@ public class Cart {
     private void recalculateTotalCost() {
         totalCost = BigDecimal.valueOf(0);
         for (CartItem cartItem:cartItemList) {
-            totalCost.add(cartItem.getCost().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
+            cartItem.setCost(cartItem.getCostPerProduct()
+                    .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
+            totalCost = totalCost.add(cartItem.getCost());
         }
-    }
-
-    public List<CartItem> findAllCartItems () {
-        return cartItemList;
     }
 
     public void deleteProductFromCart(Long id) {
