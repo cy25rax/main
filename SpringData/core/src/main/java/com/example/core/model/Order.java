@@ -1,7 +1,6 @@
 package com.example.core.model;
 
 
-import com.example.core.security2.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,9 +18,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_name")
+    private String  userName;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> items;

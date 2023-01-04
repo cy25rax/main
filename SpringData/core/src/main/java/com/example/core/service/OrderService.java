@@ -7,7 +7,6 @@ import com.example.core.interfaces.OrderItemRepository;
 import com.example.core.interfaces.OrderRepository;
 import com.example.core.model.Order;
 import com.example.core.model.OrderItem;
-import com.example.core.security2.security.DatabaseUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,6 @@ import java.util.List;
 public class OrderService {
     private final CartServiceIntegration cartService;
     private final ProductRepositoryService productRepositoryService;
-    private final DatabaseUserDetailsService userDetailsService;
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
     private CartDto cart;
@@ -33,7 +31,7 @@ public class OrderService {
         cart = cartService.getCart();
 
         Order order = new Order(null,
-                userDetailsService.findByUserName(userName),
+                userName,
                 orderItemList,
                 "KMarksa 234",
                 "1234567890",

@@ -2,6 +2,7 @@ package com.example.core.controller;
 
 import com.example.api.ProductDTO;
 import com.example.core.model.Product;
+import com.example.core.service.OrderService;
 import com.example.core.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("v1/products")
+@RequestMapping("products/v1")
+//@CrossOrigin("*")
 public class ProductRestController {
 
     @Autowired
@@ -20,6 +22,10 @@ public class ProductRestController {
     public List<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
                                     @RequestParam(required = false) Integer maxCost,
                                     @RequestParam(required = false) String title){
+        System.out.println(" cost " + minCost);
+        System.out.println(" cost " + maxCost);
+        System.out.println(" title " + title);
+
         return  productRepositoryService.findAll(minCost, maxCost, title)
                 .stream().map(item -> new ProductDTO(item.getId(), item.getTitle(), item.getCost())).toList();
     }

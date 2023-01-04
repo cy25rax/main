@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("v1/orders")
+@RequestMapping("orders/v1")
+//@CrossOrigin("*")
 public class OrderRestController {
 
     @Autowired
     private OrderService orderService;
 
     @GetMapping("/createOrder")
-    public void findById(Principal principal) {
-        orderService.createOrder(principal.getName());
+    public void createOrder(@RequestHeader String username) {
+        orderService.createOrder(username);
     }
 
 }

@@ -8,6 +8,8 @@
         <module>core</module>
         <module>cart-service</module>
         <module>Api</module>
+        <module>auth-service</module>
+        <module>front</module>
     </modules>
 
     <groupId>com.example.spring</groupId>

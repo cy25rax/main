@@ -1,2 +1,9 @@
 server:
   port: 8150
+
+integration:
+  product-service:
+    url: http://localhost:8050
+    connect-timeout: 10000
+    read-timeout: 5000
+    write-timeout: 5000
