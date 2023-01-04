@@ -1,49 +1,38 @@
 package com.example.core.integration;
 
 import com.example.api.CartDto;
-import com.example.api.CartItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
+import javax.management.relation.RelationNotFoundException;
 
 @Component
-@PropertySource("classpath:links.properties")
 public class CartServiceIntegration {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient cartServiceWebIntegration;
 
-//    @Value("${cartServiceListCartItems}")
-//    private String cartServiceListCartItems;
-    @Value("${getCartLink}")
-    private String getCartLink;
+    public CartDto getCart(String userName) {
+        CartDto cartDto = cartServiceWebIntegration.get()
+                .uri("cart/v1?userName=" + userName)
+                .retrieve()
+                .onStatus(httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
+                        clientResponse -> Mono.error(new RelationNotFoundException("товар не найден")))
+                .bodyToMono(CartDto.class)
+                .block();
 
-    @Value("${eraseCart}")
-    private String eraseCart;
-
-//    public List<CartItemDto> findAllCartItems() {
-//        ResponseEntity<List<CartItemDto>> rateResponse =
-//                restTemplate.exchange(
-//                        cartServiceListCartItems,
-//                        HttpMethod.GET,
-//                        null,
-//                        new ParameterizedTypeReference<>() {});
-//        List<CartItemDto> rates = rateResponse.getBody();
-//        return rates;
-//    }
-
-    public CartDto getCart() {
-        return restTemplate.getForObject(getCartLink, CartDto.class);
+        return cartDto;
     }
 
-    public void clearCart() {
-        restTemplate.delete(eraseCart);
+    public void clearCart(String userName) {
+        cartServiceWebIntegration.get()
+                .uri("cart/v1/eraseCart")
+                .header("userName", userName)
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
 }

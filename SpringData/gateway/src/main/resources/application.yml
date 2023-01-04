@@ -3,18 +3,21 @@ server:
 
 spring:
   application:
-    name: gateway
+    name: gateway-service
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "*"
-#            allowedOrigins: "http://localhost:8080"
+            allowedOrigins: "http://localhost:8080"
             allowedMethods:
-              - Get
-              - Post
+              - GET
+              - POST
+              - Delete
             allowedHeaders: "*"
+
       routes:
         - id: core-products
           uri: "http://localhost:8050"
@@ -44,11 +47,10 @@ spring:
           uri: "http://localhost:8250"
           predicates:
             - Path=/auth
-          filters:
-            - StripPrefix=1
-            - PrefixPath=/auth
+#          filters:
+#            - StripPrefix=1
+#            - PrefixPath=/auth
 #            - JwtAuthFilter
-
 
 jwt:
   secret: ADAskddslfadsflkjFFJSDffjasdlfjlFSDKFjhfaksjdfhKJDFHSLKDfjhlf

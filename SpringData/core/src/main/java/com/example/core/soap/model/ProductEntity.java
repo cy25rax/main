@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.math.BigDecimal;
 
 
 /**
@@ -46,7 +47,7 @@ public class ProductEntity {
     protected long id;
     @XmlElement(required = true)
     protected String title;
-    protected long cost;
+    protected BigDecimal cost;
 
     /**
      * Gets the value of the id property.
@@ -92,7 +93,7 @@ public class ProductEntity {
      * Gets the value of the cost property.
      *
      */
-    public long getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
@@ -100,7 +101,7 @@ public class ProductEntity {
      * Sets the value of the cost property.
      *
      */
-    public void setCost(long value) {
+    public void setCost(BigDecimal value) {
         this.cost = value;
     }
 

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 //import javax.persistence.*;
 
 @Data
@@ -20,12 +22,12 @@ public class Product {
     private String title;
 
     @Column(name = "cost")
-    private Long cost;
+    private BigDecimal cost;
 
     @Column(name = "engine")
     private String engine;
 
-    public Product(String title, Long cost, String engine) {
+    public Product(String title, BigDecimal cost, String engine) {
         this.title = title;
         this.cost = cost;
         this.engine = engine;

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,6 @@ public class Order {
     private String phone;
 
     @Column(name = "total_price")
-    private Long totalPrice;
+    private BigDecimal totalPrice;
 
 }

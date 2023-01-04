@@ -17,7 +17,7 @@ public class CartController {
     private CartConverter cartConverter;
 
     @GetMapping
-    public CartDto showCart(){
+    public CartDto showCart(@RequestParam(required = false) String userName){
         return cartConverter.convertToDto(cartService.getCart());
     }
 
@@ -31,8 +31,8 @@ public class CartController {
         cartService.deleteProduct(id);
     }
 
-    @DeleteMapping("/eraseCart")
-    public void eraseCart() {
+    @GetMapping("/eraseCart")
+    public void eraseCart(@RequestParam(required = false) String userName) {
         cartService.eraseCart();
     }
 

@@ -2,6 +2,8 @@ package com.example.cart.model;
 
 import com.example.api.ProductDTO;
 import lombok.Data;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +11,7 @@ import java.util.Objects;
 @Data
 public class Cart {
     private List<CartItem> cartItemList;
-    private Long totalCost;
+    private BigDecimal totalCost;
 
     public Cart() {
         this.cartItemList = new ArrayList<>();
@@ -33,9 +35,9 @@ public class Cart {
     }
 
     private void recalculateTotalCost() {
-        totalCost = 0L;
+        totalCost = BigDecimal.valueOf(0);
         for (CartItem cartItem:cartItemList) {
-            totalCost += cartItem.getCost() * cartItem.getQuantity();
+            totalCost.add(cartItem.getCost().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
         }
     }
 
@@ -55,7 +57,7 @@ public class Cart {
 
     public void eraseCart() {
         cartItemList = new ArrayList<>();
-        totalCost = 0L;
+        totalCost = BigDecimal.valueOf(0);
     }
 
     public void addQuantity(Long id, int quantity) {

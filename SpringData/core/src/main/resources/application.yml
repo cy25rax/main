@@ -36,3 +36,10 @@ spring:
 
     hibernate:
       ddl-auto: update
+
+integration:
+  cart-service:
+    url: http://localhost:8150
+    connect-timeout: 10000
+    read-timeout: 5000
+    write-timeout: 5000

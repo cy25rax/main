@@ -25,15 +25,7 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     public GatewayFilter apply(JwtAuthFilter.Config config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
-
-            System.out.println("jwt auth filter apply " + isAuthMising(request));
-            System.out.println(" " + request.getHeaders().containsKey("Autorization"));
-            System.out.println(!isAuthMising(request));
-
             if (!isAuthMising(request)) {
-
-                System.out.println("enter ");
-
                 final String token = getAuthHeader(request);
                 if (jwtUtil.isInvalid(token)) {
                     return this.onError(exchange, "Auth header invalid", HttpStatus.UNAUTHORIZED);
@@ -52,15 +44,15 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
     }
 
     private boolean isAuthMising(ServerHttpRequest request) {
-        if (!request.getHeaders().containsKey("Autorization"))
+        if (!request.getHeaders().containsKey("Authorization"))
             return true;
-        if (!request.getHeaders().getOrEmpty("Autorization").get(0).startsWith("Bearer"))
+        if (!request.getHeaders().getOrEmpty("Authorization").get(0).startsWith("Bearer"))
             return true;
         return false;
     }
 
     private String getAuthHeader(ServerHttpRequest request) {
-        return request.getHeaders().getOrEmpty("Autorization").get(0).substring(7);
+        return request.getHeaders().getOrEmpty("Authorization").get(0).substring(7);
     }
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {

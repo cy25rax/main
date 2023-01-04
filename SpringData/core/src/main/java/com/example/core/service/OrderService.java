@@ -21,14 +21,17 @@ public class OrderService {
     private final ProductRepositoryService productRepositoryService;
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
-    private CartDto cart;
-    private List<OrderItem> orderItemList;
 
     @Transactional
     public void createOrder(String  userName) {
 
-        orderItemList = new ArrayList<>();
-        cart = cartService.getCart();
+        List<OrderItem> orderItemList = new ArrayList<>();
+
+        System.out.println("cart find ");
+
+        CartDto cart = cartService.getCart(userName);
+
+        System.out.println("cart " + cart);
 
         Order order = new Order(null,
                 userName,
@@ -50,7 +53,7 @@ public class OrderService {
             orderItemList.add(orderItem);
         }
 
-        cartService.clearCart();
+        cartService.clearCart(userName);
     }
 
 }

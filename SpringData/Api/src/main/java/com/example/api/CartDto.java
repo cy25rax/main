@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -11,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CartDto {
     private List<CartItemDto> cartItemList;
-    private Long totalCost;
+    private BigDecimal totalCost;
 
 }

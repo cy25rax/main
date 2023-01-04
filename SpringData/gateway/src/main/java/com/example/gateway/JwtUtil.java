@@ -13,10 +13,6 @@ public class JwtUtil {
     private String secret;
 
     public Claims getClaimsFromToken(String token) {
-        System.out.println("jwtutils token "+ Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody());
         return Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)

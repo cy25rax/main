@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "order_items")
 @AllArgsConstructor
@@ -28,9 +30,9 @@ public class OrderItem {
     private int quantity;
 
     @Column(name = "price_per_product")
-    private Long pricePerProduct;
+    private BigDecimal pricePerProduct;
 
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
 
 }

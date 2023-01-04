@@ -7,6 +7,7 @@ import com.example.core.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -19,12 +20,9 @@ public class ProductRestController {
     private ProductRepositoryService productRepositoryService;
 
     @GetMapping
-    public List<ProductDTO> findAll(@RequestParam(required = false) Integer minCost,
-                                    @RequestParam(required = false) Integer maxCost,
+    public List<ProductDTO> findAll(@RequestParam(required = false) BigDecimal minCost,
+                                    @RequestParam(required = false) BigDecimal maxCost,
                                     @RequestParam(required = false) String title){
-        System.out.println(" cost " + minCost);
-        System.out.println(" cost " + maxCost);
-        System.out.println(" title " + title);
 
         return  productRepositoryService.findAll(minCost, maxCost, title)
                 .stream().map(item -> new ProductDTO(item.getId(), item.getTitle(), item.getCost())).toList();
@@ -56,8 +54,8 @@ public class ProductRestController {
     }
 
     @DeleteMapping("/{id}")
-    public Stream<ProductDTO> deleteById (@RequestParam(required = false) Integer minCost,
-                                          @RequestParam(required = false) Integer maxCost,
+    public Stream<ProductDTO> deleteById (@RequestParam(required = false) BigDecimal minCost,
+                                          @RequestParam(required = false) BigDecimal maxCost,
                                           @RequestParam(required = false) String title,
                                           @PathVariable Long id){
         productRepositoryService.deleteById(id);

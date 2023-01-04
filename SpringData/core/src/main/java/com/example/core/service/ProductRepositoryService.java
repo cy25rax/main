@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class ProductRepositoryService {
     private ProductRepository productRepository;
 
     @Transactional
-    public List<Product> findAll(Integer minPrice, Integer maxPrice, String title) {
+    public List<Product> findAll(BigDecimal minPrice, BigDecimal maxPrice, String title) {
         Specification<Product> specification = Specification.where(null);
 
         if (minPrice != null) {
