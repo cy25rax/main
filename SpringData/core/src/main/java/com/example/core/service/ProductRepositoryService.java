@@ -52,6 +52,7 @@ public class ProductRepositoryService {
         productRepository.deleteById(id);
     }
 
+    //SOAP
     public static final Function<Product, ProductEntity> functionToSoap = se -> {
         ProductEntity product = new ProductEntity();
         product.setId(se.getId());
@@ -59,11 +60,13 @@ public class ProductRepositoryService {
         product.setCost(se.getCost());
         return product;
     };
-
+    
+    //SOAP
     public List<ProductEntity> getAllProduct() {
         return productRepository.findAll().stream().map(functionToSoap).collect(Collectors.toList());
     }
-
+    
+    //SOAP
     public ProductEntity getProductById(Long id) {
         ProductEntity productEntity = new ProductEntity();
         Product product = productRepository.getReferenceById(id);

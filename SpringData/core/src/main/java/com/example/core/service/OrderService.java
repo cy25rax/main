@@ -26,13 +26,7 @@ public class OrderService {
     public void createOrder(String  userName) {
 
         List<OrderItem> orderItemList = new ArrayList<>();
-
-        System.out.println("cart find ");
-
         CartDto cart = cartService.getCart(userName);
-
-        System.out.println("cart " + cart);
-
         Order order = new Order(null,
                 userName,
                 orderItemList,
