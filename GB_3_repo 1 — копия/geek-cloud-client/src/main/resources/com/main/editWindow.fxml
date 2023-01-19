@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--        -->
+
+<AnchorPane prefHeight="241.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.EditWindow">
+    <children>
+        <Button fx:id="putAnimal" cancelButton="true" layoutX="114.0" layoutY="183.0" mnemonicParsing="false" onAction="#putAnimal" prefHeight="37.0" prefWidth="140.0" text="исправить" />
+        <TextField fx:id="commands" layoutX="170.0" layoutY="104.0" text="через, запятую" />
+        <TextField fx:id="name" layoutX="170.0" layoutY="74.0" text="кличка" />
+        <Label layoutX="47.0" layoutY="104.0" prefHeight="25.0" prefWidth="111.0" text="список окманд" />
+        <Label layoutX="47.0" layoutY="74.0" prefHeight="25.0" prefWidth="111.0" text="имя" />
+    </children>
+</AnchorPane>

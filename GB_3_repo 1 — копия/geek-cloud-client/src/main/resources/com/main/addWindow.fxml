@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--        -->
+
+<AnchorPane prefHeight="241.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.AddWindow">
+    <children>
+        <Button fx:id="addAnimal" cancelButton="true" layoutX="114.0" layoutY="183.0" mnemonicParsing="false" onAction="#addAnimal" prefHeight="37.0" prefWidth="140.0" text="добавить" />
+<!--        <TextField fx:id="typeName" layoutX="170.0" layoutY="44.0" text="лошадь, собака, кошка..." />-->
+        <TextField fx:id="typeName" layoutX="170.0" layoutY="44.0" text="лошадь" />
+        <TextField fx:id="commands" layoutX="170.0" layoutY="74.0" text="через, запятую" />
+        <TextField fx:id="name" layoutX="170.0" layoutY="104.0" text="кличка" />
+        <TextField fx:id="dateOfBirth" layoutX="170.0" layoutY="134.0" text="01.01.2023" />
+        <Label layoutX="47.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" text="вид животного" />
+        <Label layoutX="47.0" layoutY="74.0" prefHeight="25.0" prefWidth="111.0" text="список окманд" />
+        <Label layoutX="47.0" layoutY="104.0" prefHeight="25.0" prefWidth="111.0" text="имя" />
+        <Label layoutX="47.0" layoutY="134.0" prefHeight="25.0" prefWidth="111.0" text="дата рождения" />
+    </children>
+</AnchorPane>

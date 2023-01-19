@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.main.MainWindow">
+    <ListView fx:id="animalsView" layoutX="29.0" layoutY="109.0" prefHeight="264.0" prefWidth="139.0" />
+    <ListView fx:id="dataView" layoutX="320.0" layoutY="76.0" prefHeight="25.0" prefWidth="193.0" />
+    <ListView fx:id="commandsView" layoutX="320.0" layoutY="126.0" prefHeight="250.0" prefWidth="193.0" />
+    <Label layoutX="41.0" layoutY="76.0" prefHeight="25.0" prefWidth="116.0" text="список животных" />
+    <Label layoutX="200.0" layoutY="76.0" prefHeight="25.0" prefWidth="100.0" text="дата рождения" />
+    <Label layoutX="200.0" layoutY="126.0" prefHeight="25.0" prefWidth="100.0" text="список команд" />
+
+    <MenuBar layoutX="29.0" layoutY="24.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="File">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#addAnimal" text="add Animal" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#editAnimal" text="Edit animal" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="About">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showAllert" text="About" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+</AnchorPane>
