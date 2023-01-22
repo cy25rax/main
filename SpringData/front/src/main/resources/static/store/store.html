@@ -1,0 +1,50 @@
+<div>
+    <h3>Список товаров</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <td>
+            <div>
+                <table>
+                    <tr>
+                        <td>ID</td>
+                        <td>Название</td>
+                        <td>Цена</td>
+                        <td></td>
+                    </tr>
+                    <tbody>
+                    <tr ng-repeat="p in productsList">
+                        <td>{{p.id}}</td>
+                        <td>{{p.title}}</td>
+                        <td>{{p.cost}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в
+                                корзину
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+
+        <td>
+            <div>
+
+                <h2>Отсортировать</h2>
+                <form novalidate>
+                    <input type="number" placeholder="мин цена" ng-model="sort.minCost" required/>
+
+                    <input type="number" placeholder="макс цена" ng-model="sort.maxCost" required/>
+
+                    <input type="text" placeholder="название" ng-model="sort.title" required/>
+
+                    <input type="submit" value="sort" ng-click="loadProductsSort()">
+                </form>
+            </div>
+        </td>
+    </table>
+
+    <div id="listingTable"></div>
+    <a href="javascript:prevPage()" ng-click="prevPage()" id="btn_prev">Prev</a>
+    <a href="javascript:nextPage()" ng-click="nextPage()" id="btn_next">Next</a>
+
+</div>

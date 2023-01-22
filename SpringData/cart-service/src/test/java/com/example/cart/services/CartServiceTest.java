@@ -35,10 +35,11 @@ class CartServiceTest {
 	@Test
 	void addToCart() {
 		cartService.init();
+		String username = "1";
 		Mockito.when(productServiceIntegration.getProductById(1L)).thenReturn(productDTO);
-		cartService.addToCart(1L);
+		cartService.addToCart(1L, username);
 		
-		Cart savedIntoCart = cartService.getCart();
+		Cart savedIntoCart = cartService.getCart(username);
 		
 		Assertions.assertEquals(savedIntoCart.getCartItemList().get(0).getProductTitle(), productDTO.getTitle());
 		Assertions.assertEquals(savedIntoCart.getCartItemList().get(0).getCost(), productDTO.getCost());
@@ -49,11 +50,13 @@ class CartServiceTest {
 	@Test
 	void deleteProduct() {
 		cartService.init();
-		Mockito.when(productServiceIntegration.getProductById(1L)).thenReturn(productDTO);
-		cartService.addToCart(1L);
+		String username = "1";
 		
-		cartService.deleteProduct(1L);
-		Cart savedIntoCart = cartService.getCart();
+		Mockito.when(productServiceIntegration.getProductById(1L)).thenReturn(productDTO);
+		cartService.addToCart(1L, username);
+		
+		cartService.deleteProduct(1L, username);
+		Cart savedIntoCart = cartService.getCart(username);
 		
 		Assertions.assertEquals(savedIntoCart.getCartItemList().size(), 0);
 		
@@ -62,11 +65,13 @@ class CartServiceTest {
 	@Test
 	void addQuantity() {
 		cartService.init();
-		Mockito.when(productServiceIntegration.getProductById(1L)).thenReturn(productDTO);
-		cartService.addToCart(1L);
+		String username = "1";
 		
-		cartService.addQuantity(1L, 1);
-		Cart savedIntoCart = cartService.getCart();
+		Mockito.when(productServiceIntegration.getProductById(1L)).thenReturn(productDTO);
+		cartService.addToCart(1L, username);
+		
+		cartService.addQuantity(1L, 1, username);
+		Cart savedIntoCart = cartService.getCart(username);
 		
 		Assertions.assertEquals(savedIntoCart.getCartItemList().get(0).getQuantity(), 2);
 		

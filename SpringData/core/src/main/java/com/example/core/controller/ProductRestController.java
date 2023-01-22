@@ -5,6 +5,7 @@ import com.example.core.model.Product;
 import com.example.core.service.OrderService;
 import com.example.core.service.ProductRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -22,9 +23,15 @@ public class ProductRestController {
     @GetMapping
     public List<ProductDTO> findAll(@RequestParam(required = false) BigDecimal minCost,
                                     @RequestParam(required = false) BigDecimal maxCost,
-                                    @RequestParam(required = false) String title){
-
-        return  productRepositoryService.findAll(minCost, maxCost, title)
+                                    @RequestParam(required = false) String title,
+                                    @RequestParam(defaultValue = "1") Integer page){
+        if (page < 1) {
+            page = 1;
+        }
+//        return productRepositoryService.findAll(minCost, maxCost, title, page - 1)
+//                       .map(productRepositoryService::entityToDto).getContent();
+        
+        return  productRepositoryService.findAll(minCost, maxCost, title, page -1)
                 .stream().map(item -> new ProductDTO(item.getId(), item.getTitle(), item.getCost())).toList();
     }
 
@@ -57,9 +64,13 @@ public class ProductRestController {
     public Stream<ProductDTO> deleteById (@RequestParam(required = false) BigDecimal minCost,
                                           @RequestParam(required = false) BigDecimal maxCost,
                                           @RequestParam(required = false) String title,
-                                          @PathVariable Long id){
+                                          @PathVariable Long id,
+                                          @RequestParam(defaultValue = "1", name = "p") Integer page){
+        if (page < 1) {
+            page = 1;
+        }
         productRepositoryService.deleteById(id);
-        return productRepositoryService.findAll(minCost, maxCost, title)
+        return productRepositoryService.findAll(minCost, maxCost, title, page)
                 .stream().map(item -> new ProductDTO(item.getId(), item.getTitle(), item.getCost()));
     }
 

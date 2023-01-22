@@ -5,6 +5,8 @@ import com.example.core.model.Product;
 import com.example.core.service.specifications.ProductSpecifications;
 import com.example.core.soap.model.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public class ProductRepositoryService {
     private ProductRepository productRepository;
 
     @Transactional
-    public List<Product> findAll(BigDecimal minPrice, BigDecimal maxPrice, String title) {
+    public Page<Product> findAll(BigDecimal minPrice, BigDecimal maxPrice, String title, int page) {
         Specification<Product> specification = Specification.where(null);
 
         if (minPrice != null) {
@@ -34,9 +36,9 @@ public class ProductRepositoryService {
             specification = specification.and(ProductSpecifications.titleLike(title));
         }
 
-        return productRepository.findAll(specification);
+        return productRepository.findAll(specification, PageRequest.of(page, 2));
     }
-
+    
     @Transactional
     public Product getReferenceById(Long id) {
         return productRepository.getReferenceById(id);

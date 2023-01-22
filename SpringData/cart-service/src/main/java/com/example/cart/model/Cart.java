@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Cart {
     private List<CartItem> cartItemList;
     private BigDecimal totalCost;
+    private String userName;
 
     public Cart() {
         this.cartItemList = new ArrayList<>();
