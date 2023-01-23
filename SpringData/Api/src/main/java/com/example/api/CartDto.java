@@ -13,5 +13,4 @@ import java.util.List;
 public class CartDto {
     private List<CartItemDto> cartItemList;
     private BigDecimal totalCost;
-    private String userName;
 }

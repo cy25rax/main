@@ -49,5 +49,10 @@ public class OrderService {
 
         cartService.clearCart(userName);
     }
-
+    
+    public List<Order> findByUsername(String username) {
+        return orderRepository.findByUserName(username);
+    }
+    
+    
 }

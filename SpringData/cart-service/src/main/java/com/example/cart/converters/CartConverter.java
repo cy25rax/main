@@ -16,8 +16,7 @@ public class CartConverter {
                  cart.getCartItemList()
                    .stream()
                    .map(cartItemConverter::convertToDto).toList(),
-                cart.getTotalCost(),
-                cart.getUserName()
+                cart.getTotalCost()
         );
         return cartDto;
     }

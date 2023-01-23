@@ -1,67 +1,56 @@
 package com.example.cart.services;
 
 import com.example.api.ProductDTO;
-import com.example.cart.converters.CartItemConverter;
 import com.example.cart.integration.ProductServiceIntegration;
 import com.example.cart.model.Cart;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Consumer;
 
 @Service
 public class CartService {
 
-    private Cart cart;
-
+    @Value("${cart-service.cart-prefix}")
+    private String cartPrefix;
+    
     @Autowired
-    private CartItemConverter cartItemConverter;
+    private RedisTemplate<String, Object> redisTemplate;
+    
     @Autowired
     private ProductServiceIntegration productServiceIntegration;
 
-    @PostConstruct
-    public void init() {
-        cart = new Cart();
+    public void addQuantity(Long id, int quantity, String uuid) {
+        execute(uuid, cart -> cart.addQuantity(id, quantity));
     }
     
-    public void checkUserName (String userName) {
-        if (userName == null && cart.getUserName() == null) {
-            cart.setUserName("общая корзина");
+    public Cart getCurrentCart(String uuid) {
+        String targetUuid = cartPrefix + uuid;
+        if (!redisTemplate.hasKey(targetUuid)) {
+            redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
+        return (Cart) redisTemplate.opsForValue().get(targetUuid);
+    }
     
-        if (userName != null && cart.getUserName().equals("общая корзина")) {
-            cart.eraseCart();
-            cart.setUserName(userName);
-        }
+    public void add(String uuid, Long productId) {
+        ProductDTO product = productServiceIntegration.getProductById(productId);
+        execute(uuid, cart -> cart.addToCart(product));
+    }
     
-        if (userName == null && !cart.getUserName().equals("общая корзина")) {
-            cart.eraseCart();
-            cart.setUserName("общая корзина");
-        }
+    public void remove(String uuid, Long productId) {
+        execute(uuid, cart -> cart.deleteProductFromCart(productId));
     }
-
-    public void addToCart(Long id, String userName) {
-        checkUserName(userName);
-        ProductDTO productDTO = productServiceIntegration.getProductById(id);
-        cart.addToCart(productDTO);
+    
+    public void clear(String uuid) {
+        execute(uuid, Cart::eraseCart);
     }
-
-    public Cart getCart(String userName) {
-        checkUserName(userName);
-        return cart;
-    }
-
-    public void deleteProduct(Long id, String userName) {
-        checkUserName(userName);
-        cart.deleteProductFromCart(id);
-    }
-
-    public void eraseCart() {
-        cart.eraseCart();
-    }
-
-    public void addQuantity(Long id, int quantity, String userName) {
-        checkUserName(userName);
-        cart.addQuantity(id, quantity);
+    
+    private void execute(String uuid, Consumer<Cart> operation) {
+        Cart cart = getCurrentCart(uuid);
+        operation.accept(cart);
+        redisTemplate.opsForValue().set(cartPrefix + uuid, cart);
     }
 
 }

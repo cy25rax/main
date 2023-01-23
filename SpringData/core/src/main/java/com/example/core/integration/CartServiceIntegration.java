@@ -17,7 +17,8 @@ public class CartServiceIntegration {
 
     public CartDto getCart(String userName) {
         CartDto cartDto = cartServiceWebIntegration.get()
-                .uri("cart/v1?userName=" + userName)
+                .uri("cart/v1/0")
+                .header("username", userName)
                 .retrieve()
                 .onStatus(httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
                         clientResponse -> Mono.error(new RelationNotFoundException("товар не найден")))
@@ -29,8 +30,8 @@ public class CartServiceIntegration {
 
     public void clearCart(String userName) {
         cartServiceWebIntegration.get()
-                .uri("cart/v1/eraseCart")
-                .header("userName", userName)
+                .uri("cart/v1/0/clear")
+                .header("username", userName)
                 .retrieve()
                 .toBodilessEntity()
                 .block();

@@ -15,7 +15,8 @@ var pageNumber = 1;
     }
 
     $scope.addToCart = function (productId) {
-        $http.get('http://localhost:8100/cart/v1/add/' + productId).then(function (response) {
+//    $window.alert('http://localhost:8100/cart/v1/' + $localStorage.winterMarketGuestCartId + '/add/' + productId);
+        $http.get('http://localhost:8100/cart/v1/' + $localStorage.winterMarketGuestCartId + '/add/' + productId).then(function (response) {
             $scope.loadCart();
         });
     }
@@ -31,7 +32,7 @@ var pageNumber = 1;
     $scope.prevPage = function () {
         if (pageNumber > 1) {
             pageNumber = pageNumber - 1;
-//            $window.alert'http://localhost:8100/core/products/v1?page=' + pageNumber);
+//            $window.alert('http://localhost:8100/core/products/v1?page=' + pageNumber);
             $http.get('http://localhost:8100/core/products/v1?page=' + pageNumber).then(function (response) {
                 $scope.productsList = response.data;
             });
@@ -50,8 +51,8 @@ var pageNumber = 1;
             $scope.sort.title = ""
         }
 
-        $window.alert("http://localhost:8050/products/v1?minCost="+$scope.sort.minCost+
-                                      "&maxCost="+$scope.sort.maxCost+"&title="+$scope.sort.title);
+//        $window.alert("http://localhost:8050/products/v1?minCost="+$scope.sort.minCost+
+//                                      "&maxCost="+$scope.sort.maxCost+"&title="+$scope.sort.title);
 
         $http.get('http://localhost:8100/core/products/v1?minCost='+ $scope.sort.minCost +
             '&maxCost=' + $scope.sort.maxCost + '&title=' + $scope.sort.title).then(function (response) {
