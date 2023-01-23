@@ -60,8 +60,8 @@ public class CartController {
 	@GetMapping("/{uuid}")
 	public CartDto getCurrentCart(@RequestHeader(name = "username", required = false) String username,
 								  @PathVariable String uuid) {
-		String targetUuid = getCartUuid(username, uuid);
-		return cartConverter.convertToDto(cartService.getCurrentCart(targetUuid));
+//		String targetUuid = getCartUuid(username, uuid);
+		return cartConverter.convertToDto(cartService.getCurrentCart(uuid, username));
 	}
 	
 	private String getCartUuid(String username, String uuid) {

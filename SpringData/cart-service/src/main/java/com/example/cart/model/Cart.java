@@ -12,7 +12,6 @@ import java.util.Objects;
 public class Cart {
     private List<CartItem> cartItemList;
     private BigDecimal totalCost;
-//    private String userName;
 
     public Cart() {
         this.cartItemList = new ArrayList<>();
@@ -69,5 +68,17 @@ public class Cart {
                 break;
             }
         }
+    }
+    
+    public static Cart sumCarts(Cart cart1, Cart cart2) {
+        Cart resultCart = new Cart();
+        resultCart.setCartItemList(java.util.stream.Stream.concat(
+                cart1.getCartItemList().stream(),
+                cart2.getCartItemList().stream()
+        ).toList());
+    
+        resultCart.recalculateTotalCost();
+    
+        return resultCart;
     }
 }

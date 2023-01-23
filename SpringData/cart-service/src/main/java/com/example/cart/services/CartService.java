@@ -26,8 +26,18 @@ public class CartService {
         execute(uuid, cart -> cart.addQuantity(id, quantity));
     }
     
-    public Cart getCurrentCart(String uuid) {
+    public Cart getCurrentCart(String uuid, String username) {
         String targetUuid = cartPrefix + uuid;
+        String targetUser = cartPrefix + username;
+        if (redisTemplate.hasKey(targetUuid) && redisTemplate.hasKey(targetUser)) {
+            Cart userCart = (Cart) redisTemplate.opsForValue().get(targetUser);
+            Cart uuidCart = (Cart) redisTemplate.opsForValue().get(targetUuid);
+            Cart result = Cart.sumCarts(userCart, uuidCart);
+            redisTemplate.opsForValue().set(targetUser, result);
+            uuidCart.eraseCart();
+            redisTemplate.opsForValue().set(targetUuid, uuidCart);
+            return result;
+        }
         if (!redisTemplate.hasKey(targetUuid)) {
             redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
@@ -48,7 +58,7 @@ public class CartService {
     }
     
     private void execute(String uuid, Consumer<Cart> operation) {
-        Cart cart = getCurrentCart(uuid);
+        Cart cart = getCurrentCart(uuid, null);
         operation.accept(cart);
         redisTemplate.opsForValue().set(cartPrefix + uuid, cart);
     }
