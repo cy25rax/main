@@ -8,14 +8,13 @@ import org.springframework.stereotype.Component;
 public class CartItemConverter {
 
     public CartItemDto convertToDto(CartItem cartItem) {
-        CartItemDto cartItemDto = new CartItemDto(
-                cartItem.getProductId(),
-                cartItem.getProductTitle(),
-                cartItem.getQuantity(),
-                cartItem.getCostPerProduct(),
-                cartItem.getCost()
-        );
-        return cartItemDto;
+        return CartItemDto.builder()
+                       .productId(cartItem.getProductId())
+                       .productTitle(cartItem.getProductTitle())
+                       .quantity(cartItem.getQuantity())
+                       .costPerProduct(cartItem.getCostPerProduct())
+                       .cost(cartItem.getCost())
+                       .build();
     }
 
 }
