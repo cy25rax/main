@@ -5,9 +5,11 @@ import com.example.api.CartItemDto;
 import com.example.core.integration.CartServiceIntegration;
 import com.example.core.interfaces.OrderItemRepository;
 import com.example.core.interfaces.OrderRepository;
+import com.example.core.listner.ListnerMessage;
 import com.example.core.model.Order;
 import com.example.core.model.OrderItem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ public class OrderService {
     private final ProductRepositoryService productRepositoryService;
     private final OrderItemRepository orderItemRepository;
     private final OrderRepository orderRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Transactional
     public void createOrder(String  userName) {
@@ -48,6 +51,8 @@ public class OrderService {
         }
 
         cartService.clearCart(userName);
+        
+        publisher.publishEvent(new ListnerMessage(this, "cart create"));
     }
     
     public List<Order> findByUsername(String username) {
