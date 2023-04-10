@@ -1,0 +1,56 @@
+<!doctype html>
+
+<html ng-app="app">
+<!--<html>-->
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+</head>
+
+<body>
+<div class="container" ng-controller="indexController">
+    <form>
+        <input type="text" placeholder="имя" ng-model="add_name" required/>
+        <input type="number" placeholder="возраст" ng-model="add_age" required/>
+        <input type="submit" value="добавить" ng-click="addStudent()">
+    </form>
+
+    <h3>Список студентов</h3>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Возраст</td>
+            <td></td>
+        </tr>
+        <tr ng-repeat="s in studentsList">
+            <td>{{s.id}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.age}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="deleteStudent(s.id)">удалить
+                </button>
+            </td>
+            <td>
+                <form>
+                    <input type="text" placeholder="имя" ng-model="name"/>
+                    <input type="number" placeholder="возраст" ng-model="age"/>
+                    <input type="submit" value="изменить" ng-click="updateStudent(s.id, name, age)">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="index.js"></script>
+
+</body>
+</html>
