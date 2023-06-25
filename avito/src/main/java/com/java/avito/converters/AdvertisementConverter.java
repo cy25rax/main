@@ -15,8 +15,8 @@ public class AdvertisementConverter {
     public AdvertisementDto entityToDto(Advertisement advertisement) {
         return new AdvertisementDto(advertisement.getId(),
                 advertisement.getTitle(),
-                advertisement.getPrice());
-//                advertisement.getCategory().getTitle());
+                advertisement.getPrice(),
+                advertisement.getCategory().getTitle());
     }
 
     public Advertisement dtoToEntity(AdvertisementDto advertisementDto) {

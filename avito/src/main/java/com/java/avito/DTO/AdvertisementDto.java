@@ -13,8 +13,7 @@ public class AdvertisementDto {
     private BigDecimal price;
     private String categoryTitle;
 
-//    public AdvertisementDto(Long id, String title, BigDecimal price, String categoryTitle) {
-    public AdvertisementDto(Long id, String title, BigDecimal price) {
+    public AdvertisementDto(Long id, String title, BigDecimal price, String categoryTitle) {
         this.id = id;
         this.title = title;
         this.price = price;

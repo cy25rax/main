@@ -9,7 +9,7 @@ create table advertisement (
 );
 
 insert into advertisement (title, price, category_id, user_id) values
-('Milk', 80, 1, 1), ('Bread', 25, 2, 1), ('Cheese', 300, 3, 2);
+('Milk', 80, 1, 1), ('Bread', 25, 2, 1), ('Cheese', 300, 2, 2);
 
 create table users
 (
@@ -40,15 +40,25 @@ values ('bob', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i'),
        ('john', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i');
 
 insert into users_roles (user_id, role_id)
-values (1, 1),
-       (2, 2);
+values (1, 1), (2, 2);
 
---create table categories
---(
---    id                  bigserial primary key,
---    advertisement_id    bigint not null references users (id),
---    category            varchar(255),
+create table categories (
+    id              bigserial primary key,
+    title           varchar(255) unique,
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
+);
+
+insert into categories (title) values ('Food'), ('Others');
+
+--create table categories_advertisement (
+--    categories_id       bigint not null references users (id),
+--    advertisement_id    bigint not null references roles (id),
+--    primary key (categories_id, advertisement_id)
 --);
+--
+--insert into categories_advertisement (categories_id, advertisement_id)
+--    values (1, 1), (2, 2), (2, 3);
 
 --create table order_items
 --(

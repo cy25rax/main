@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -25,9 +26,9 @@ public class Advertisement {
 	@Column(name = "price")
 	private BigDecimal price;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "category_id")
-//	private Category category;
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
 	
 //	@ManyToOne
 //	@JoinColumn(name = "user_id")

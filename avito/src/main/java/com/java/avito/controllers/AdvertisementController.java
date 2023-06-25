@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdvertisementController {
 	private final AdvertisementService advertisementService;
-	private final AdvertisementConverter productConverter;
+	private final AdvertisementConverter advertisementConverter;
 	
 	@GetMapping
 	public List<AdvertisementDto> findAdvetisement(
@@ -28,20 +28,19 @@ public class AdvertisementController {
 			page = 1;
 		}
 		Specification<Advertisement> spec = advertisementService.createSpecByFilters(minPrice, maxPrice, title);
-		System.out.println(advertisementService.findAll(spec, page - 1));
-		return advertisementService.findAll(spec, page - 1).map(productConverter::entityToDto).getContent();
+		return advertisementService.findAll(spec, page - 1).map(advertisementConverter::entityToDto).getContent();
 	}
 	
 	@GetMapping("/{id}")
 	public AdvertisementDto findProductById(@PathVariable Long id) {
 		Advertisement p = advertisementService.findById(id).orElse(null);
-		return productConverter.entityToDto(p);
+		return advertisementConverter.entityToDto(p);
 	}
 	
 	@PostMapping
 	public AdvertisementDto createNewProduct(@RequestBody AdvertisementDto advertisementDto) {
 		Advertisement p = advertisementService.createNewProduct(advertisementDto);
-		return productConverter.entityToDto(p);
+		return advertisementConverter.entityToDto(p);
 	}
 	
 	@DeleteMapping("/{id}")
