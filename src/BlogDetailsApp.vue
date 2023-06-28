@@ -1,30 +1,43 @@
 <template>
-    <div class="content page">
-        <div class="content_left">
-            <div v-for="item in getArticles" :key="item.id">
-                <BlogDetailsComponent :title="item.title" :img="item.img" :text1="item.text1" :text2="item.text2" :label="item.label" ></BlogDetailsComponent>
-            </div>
+    <div>
+        <HeaderComp/>
+
+        <div class="banner page">
         </div>
 
-        <div class="content_right">
-            <h1 class="content_right_title">Tags</h1>
-            <div class="content_right_tags">
-                <div style="padding-bottom: 20px;"  v-for="item in tagNames" :key="item.id">
-                    <input type="radio" name="*" :id="item">
-                    <label @click="click(item)" class="content_right_button_text" :for="item">{{item}}</label>
+        <div class="content page">
+            <div class="content_left">
+                <div v-for="item in getArticles" :key="item.id">
+                    <BlogDetailsComponent :title="item.title" :img="item.img" :text1="item.text1" :text2="item.text2" :label="item.label" ></BlogDetailsComponent>
+                </div>
+            </div>
+
+            <div class="content_right">
+                <h1 class="content_right_title">Tags</h1>
+                <div class="content_right_tags">
+                    <div style="padding-bottom: 20px;"  v-for="item in tagNames" :key="item.id">
+                        <input type="radio" name="*" :id="item">
+                        <label @click="click(item)" class="content_right_button_text" :for="item">{{item}}</label>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <FooterComp />
     </div>
 </template>
   
 <script>
-  import BlogDetailsComponent from './components/blog_details_component.vue'
+import BlogDetailsComponent from './components/BlogDetailsComponent.vue'
+import HeaderComp from './components/HeaderComponent.vue'
+import FooterComp from './components/FooterComponent.vue'
   
   export default {
     name: 'BlogDetails',
     components: {
-      BlogDetailsComponent
+      BlogDetailsComponent,
+      HeaderComp,
+      FooterComp
     },
     data() {
         return {
@@ -116,6 +129,40 @@
 </script>
   
 <style lang="scss">
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: 'DM Serif Display', serif;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .page {
+        padding-left: calc(50% - 1200px / 2);
+        padding-right: calc(50% - 1200px / 2);
+    }
+
+
+    .banner {
+        background-image: url("../public/img/blog_solo_banner.jpg");
+        background-size: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 351px;
+    }
+
+    input[type=radio]:checked + label {
+        background: #292F36;
+        color: #FFFFFF;
+    }
+
     .content {
     display: flex;
     gap: 57px;
