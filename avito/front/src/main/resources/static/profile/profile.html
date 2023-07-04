@@ -1,0 +1,40 @@
+<div>
+    <p></p>
+    <h3>Профиль</h3>
+    <p></p>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Категория</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in profile">
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.categoryTitle}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form novalidate ng-submit="functionAddAdvertisement()">
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="1" placeholder="" ng-model="adv.title">
+            <label for="1">Название</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="number" class="form-control" id="2" placeholder="" ng-model="adv.price">
+            <label for="2">Цена</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="3" placeholder="" ng-model="adv.categoryTitle">
+            <label for="3">Категория</label>
+        </div>
+        <p></p>
+        <p></p>
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Отправить</button>
+    </form>
+</div>
