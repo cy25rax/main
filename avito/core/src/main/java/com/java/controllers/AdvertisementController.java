@@ -37,12 +37,6 @@ public class AdvertisementController {
 		return advertisementConverter.entityToDto(p);
 	}
 	
-	@PostMapping
-	public AdvertisementDto createNewProduct(@RequestBody AdvertisementDto advertisementDto) {
-		Advertisement p = advertisementService.createNewProduct(advertisementDto);
-		return advertisementConverter.entityToDto(p);
-	}
-	
 	@DeleteMapping("/{id}")
 	public void deleteProductById(@PathVariable Long id) {
 		advertisementService.deleteById(id);

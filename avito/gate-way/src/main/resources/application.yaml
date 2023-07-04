@@ -22,7 +22,7 @@ spring:
             - Path=/core/**
           filters:
             - StripPrefix=1
-            - PrefixPath=/api/v1/advertisement
+            - PrefixPath=/api/v1/
             - JwtAuthFilter
         - id: auth-service
           uri: http://localhost:8200

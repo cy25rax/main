@@ -29,9 +29,9 @@ public class Advertisement {
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "user_id")
-//	private User user;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@CreationTimestamp
 	@Column(name = "created_at")

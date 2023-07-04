@@ -14,12 +14,11 @@ public class AdvertisementDto {
     private String categoryTitle;
     private String userName;
 
-//    public AdvertisementDto(Long id, String title, BigDecimal price, String categoryTitle, String userName) {
-    public AdvertisementDto(Long id, String title, BigDecimal price, String categoryTitle) {
+    public AdvertisementDto(Long id, String title, BigDecimal price, String categoryTitle, String userName) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.categoryTitle = categoryTitle;
-//        this.userName = userName;
+        this.userName = userName;
     }
 }

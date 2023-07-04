@@ -11,8 +11,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-
+    
     public Optional<Category> findByTitle(String title) {
         return categoryRepository.findByTitle(title);
+    }
+    
+    public void save(Category category) {
     }
 }

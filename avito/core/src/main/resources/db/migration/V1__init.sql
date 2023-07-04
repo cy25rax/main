@@ -19,3 +19,10 @@ create table categories (
 );
 
 insert into categories (title) values ('Food'), ('Others');
+
+create table advertisement_users (
+    id              bigserial primary key,
+    username        varchar(255) unique
+);
+
+insert into advertisement_users (username) values ('bob'), ('john');
