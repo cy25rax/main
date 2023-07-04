@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+a {
+    text-decoration: none;
+}
 .footer {
     display: flex;
     justify-content: space-between;

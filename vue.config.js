@@ -13,6 +13,10 @@ module.exports = {
     blog: {
       entry: 'src/blog.js',
       template: 'public/blog.html',
+    },
+    project: {
+      entry: 'src/project.js',
+      template: 'public/project.html',
     }
   }
 }

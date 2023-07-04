@@ -14,7 +14,7 @@
           <ul>
               <li>
                   <a href="index.html">Home</a>
-                  <a href="#">Project</a>
+                  <a href="project.html">Project</a>
                   <a href="blog.html">Blog</a>
               </li>
           </ul>
@@ -29,6 +29,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+a {
+    text-decoration: none;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
