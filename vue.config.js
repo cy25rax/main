@@ -17,6 +17,10 @@ module.exports = {
     project: {
       entry: 'src/project.js',
       template: 'public/project.html',
+    },
+    project_details: {
+      entry: 'src/projectDetails.js',
+      template: 'public/project_details.html',
     }
   }
 }
