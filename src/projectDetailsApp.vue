@@ -1,7 +1,5 @@
 <template>
     <div>
-        <HeaderComponent />
-
         <div class="banner page">
         </div>
 
@@ -15,14 +13,10 @@
 
             <CarouselComponent :img1="data().img1" :img2="data().img2" :img3="data().img3" />
         </div>
-
-        <FooterComponent />
     </div>
 </template>
 
 <script>
-import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
 import CarouselComponent from './components/CarouselComponent.vue';
 import { mapState } from 'vuex';
 
@@ -37,7 +31,7 @@ export default {
     methods: {
         ...mapState(['data']),
     },
-    components: { HeaderComponent, FooterComponent, CarouselComponent }
+    components: {CarouselComponent }
 };
 </script>
 

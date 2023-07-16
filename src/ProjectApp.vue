@@ -1,7 +1,5 @@
 <template>
     <div>
-        <HeaderComponent />
-
         <div class="banner page">
             <div class="banner_intro">
                 <h1 class="banner_intro_title">
@@ -34,21 +32,23 @@
                 </ProjectComponent>
             </div>
 
-            <div class="projects_pagination">
-                <a href="#" class="projects_pagination_page">01</a>
-                <a href="#" class="projects_pagination_page">02</a>
-                <a href="#" class="projects_pagination_page">03</a>
-                <a href="#" class="projects_pagination_page"><img src="img/Vector.png" alt=""></a>
+            <div @click="getStyle()" class="projects_pagination">
+                <router-link to="/project/1" class="projects_pagination_page">01</router-link>
+                <router-link to="/project/2" class="projects_pagination_page">02</router-link>
+                <router-link to="/project/3" class="projects_pagination_page">03</router-link>
+                <router-link to="/project/4" class="projects_pagination_page">
+                    <img src="img/Vector.png" alt="">
+                </router-link>
             </div>
-        </div>
 
-        <FooterComponent />
+            <h1>
+                вы находитесь на странице: {{ getPage }}
+            </h1>
+        </div>
     </div>
 </template>
 
 <script>
-import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
 import ProjectComponent from './components/ProjectComponent.vue';
 
 export default {
@@ -56,6 +56,7 @@ export default {
     data() {
         return {
             filter: [],
+            pages: [],
             projects: [
                 { id: 0, img: 'Bedroomtable.jpg', title: 'Classic Minimal Bedroom', label: 'Bathroom', like: false },
                 { id: 1, img: 'table.jpg', title: 'Classic Minimal Bedroom', label: 'Bathroom', like: false },
@@ -80,7 +81,13 @@ export default {
                 });
                 return tempProjects
             }
+        },
+        getPage() {
+            return this.$route.params.page
         }
+    },
+    mounted() {
+        this.pages = document.querySelectorAll(".projects_pagination_page")
     },
     methods: {
         click(filter) {
@@ -95,9 +102,22 @@ export default {
         },
         updateLike(index, like) {
             this.projects[index].like = like
+        },
+        getStyle() {
+            for (let index = 0; index < this.pages.length; index++) {
+                const element = this.pages[index];
+
+                element.style.background = '#FFFFFF'
+                element.style.border = '1px solid #CDA274'
+                
+                if (Number(this.getPage) === Number(index + 1)) {
+                    element.style.background = '#F4F0EC'
+                    element.style.border = 'none'
+                }
+            }
         }
     },
-    components: { HeaderComponent, FooterComponent, ProjectComponent }
+    components: { ProjectComponent }
 };
 </script>
 

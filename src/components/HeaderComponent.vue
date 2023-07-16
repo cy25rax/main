@@ -4,18 +4,18 @@
           <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 34.0003H13.4588V24.499C13.4588 22.4853 15.0898 20.8543 17.1035 20.8543C19.1172 20.8543 20.7482 22.4853 20.7482 24.499V34.0003H33.9975V0C15.2211 0 0 15.2211 0 34.0003Z" fill="#CDA274"/>
               </svg>
-          <a href="index.html">
+          <router-link to="/home">
               <h1 class="header_left_title">
                   Interno
               </h1>
-          </a>                    
+          </router-link>                    
       </div>
       <nav class="header_right">
           <ul>
               <li>
-                  <a href="index.html">Home</a>
-                  <a href="project.html">Project</a>
-                  <a href="blog.html">Blog</a>
+                <router-link to="/home">Home</router-link>
+                <router-link to="/project">Project</router-link>
+                <router-link to="/blog">Blog</router-link>
               </li>
           </ul>
       </nav>
@@ -32,6 +32,11 @@ export default {
 
 a {
     text-decoration: none;
+}
+
+.page {
+    padding-left: calc(50% - 1200px / 2);
+    padding-right: calc(50% - 1200px / 2);
 }
 
 .header {

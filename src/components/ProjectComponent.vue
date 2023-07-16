@@ -8,13 +8,13 @@
                 <p class="project_frame_title">{{ title }}</p>
                 <p class="project_frame_label">{{ label }}</p>
             </div>
-            <a href="project_details.html" class="project_content_arrow">
+            <router-link to="/projectDetails" class="project_content_arrow">
                 <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="35" cy="35" r="35" fill="#F4F0EC" />
                     <path d="M32 44L40 35L32 26" stroke="#292F36" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
                 </svg>
-            </a>
+            </router-link>
         </div>
         <svg @click="chngFill" class="project_star" width="36" height="35" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_993_142)">

@@ -14,24 +14,5 @@ export default new Vuex.Store({
             img2: 'article_img2.jpg',
             img3: 'article_img3.jpg'
         }
-    },
-    actions: {
-        // методы для асинхронных операций
-        fetchData({ commit }) {
-            setTimeout(() => {
-            const paymentsList = [
-                {date: '28.03.2020'},
-                {date: '24.03.2020'},
-                {date: '24.03.2020'}
-            ];
-            commit('setData', paymentsList);
-            }, 1000);
-        }
-            
-    },
-    getters: {
-        getCounter: state => state.count,
-        getData: state => state.dataArrray
-        // методы для чтения состояния
-    },
+    }
 })

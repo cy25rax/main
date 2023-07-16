@@ -1,7 +1,5 @@
 <template>
     <div>
-        <HeaderComp/>
-
         <div class="banner page">
         </div>
 
@@ -22,22 +20,16 @@
                 </div>
             </div>
         </div>
-
-        <FooterComp />
     </div>
 </template>
   
 <script>
 import BlogDetailsComponent from './components/BlogDetailsComponent.vue'
-import HeaderComp from './components/HeaderComponent.vue'
-import FooterComp from './components/FooterComponent.vue'
   
   export default {
     name: 'BlogDetails',
     components: {
       BlogDetailsComponent,
-      HeaderComp,
-      FooterComp
     },
     data() {
         return {
@@ -128,7 +120,7 @@ import FooterComp from './components/FooterComponent.vue'
   }
 </script>
   
-<style lang="scss">
+<style lang="scss" scoped>
     * {
         margin: 0;
         padding: 0;

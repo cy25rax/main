@@ -5,11 +5,11 @@
                     <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 34.0003H13.4588V24.499C13.4588 22.4853 15.0898 20.8543 17.1035 20.8543C19.1172 20.8543 20.7482 22.4853 20.7482 24.499V34.0003H33.9975V0C15.2211 0 0 15.2211 0 34.0003Z" fill="#CDA274"/>
                     </svg>
-                    <a href="index.html">
+                    <router-link to="/home">
                         <h1 class="footer_left_logo_title">
                             Interno
                         </h1>
-                    </a>
+                    </router-link>
                 </div>
                 <p class="footer_left_text">
                     It is a long established fact that a reader will be distracted lookings.
@@ -25,9 +25,9 @@
             </div>
             <div class="footer_middle">
                 <h2 class="footer_middle_title">Pages</h2>
-                <a href="index.html" class="footer_middle_link">Home</a>
-                <a href="#" class="footer_middle_link">Project</a>
-                <a href="blog.html" class="footer_middle_link">Blog</a>
+                <router-link class="footer_middle_link" to="/home">Home</router-link>
+                <router-link class="footer_middle_link" to="/project">Project</router-link>
+                <router-link class="footer_middle_link" to="/blog">Blog</router-link>
             </div>
             <div class="footer_right">
                 <h2 class="footer_right_title">Contacts</h2>
@@ -47,6 +47,10 @@ export default {
 <style lang="scss" scoped>
 a {
     text-decoration: none;
+}
+.page {
+    padding-left: calc(50% - 1200px / 2);
+    padding-right: calc(50% - 1200px / 2);
 }
 .footer {
     display: flex;
