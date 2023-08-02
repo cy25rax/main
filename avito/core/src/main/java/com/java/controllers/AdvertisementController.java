@@ -3,11 +3,16 @@ package com.java.controllers;
 import com.java.DTO.AdvertisementDto;
 import com.java.converters.AdvertisementConverter;
 import com.java.models.Advertisement;
+import com.java.models.Feedback;
+import com.java.repositoryes.FeedbackRepository;
+import com.java.models.User;
 import com.java.services.AdvertisementService;
+import com.java.services.FeedbackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -17,6 +22,7 @@ import java.util.List;
 public class AdvertisementController {
 	private final AdvertisementService advertisementService;
 	private final AdvertisementConverter advertisementConverter;
+	private final FeedbackService feedbackService;
 	
 	@GetMapping
 	public List<AdvertisementDto> findAdvetisement(
@@ -32,9 +38,15 @@ public class AdvertisementController {
 	}
 	
 	@GetMapping("/{id}")
-	public AdvertisementDto findProductById(@PathVariable Long id) {
+	public List<AdvertisementDto> findProductById(@PathVariable Long id) {
 		Advertisement p = advertisementService.findById(id).orElse(null);
-		return advertisementConverter.entityToDto(p);
+		return Collections.singletonList(advertisementConverter.entityToDto(p));
+	}
+	
+	@PostMapping("/{id}/feedback")
+	public void sendFeedback(@PathVariable Long id,
+							 @RequestBody String feedbackText) {
+		feedbackService.createFeedback(id, feedbackText);
 	}
 	
 	@DeleteMapping("/{id}")

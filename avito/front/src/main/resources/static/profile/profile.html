@@ -18,6 +18,23 @@
         </tbody>
     </table>
 
+    <p></p>
+    <h3>Отзывы</h3>
+    <p></p>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="f in feedbackList">
+            <td>{{f.text}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
     <form novalidate ng-submit="functionAddAdvertisement()">
         <div class="form-floating input-group-sm">
             <input type="text" class="form-control" id="1" placeholder="" ng-model="adv.title">

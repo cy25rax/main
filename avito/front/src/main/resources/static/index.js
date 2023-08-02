@@ -23,6 +23,14 @@
                 templateUrl: 'profile/profile.html',
                 controller: 'profileController'
             })
+            .when('/advertisement', {
+                templateUrl: 'advertisement/advertisement.html',
+                controller: 'advertisementController'
+            })
+            .when('/advertisement/:page', {
+                templateUrl: 'advertisement/advertisement.html',
+                controller: 'advertisementController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -5,14 +5,19 @@
 
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
+            <td></td>
             <td>Название</td>
             <td>Цена</td>
             <td>Категория</td>
             <td>Владелец</td>
-            <td></td>
         </tr>
         <tbody>
-        <tr ng-repeat="p in productsList">
+        <tr ng-repeat="p in productsList" >
+            <td>
+                <a href="#!/advertisement/{{p.id}}" >
+                    Просмотреть
+                </a>
+            </td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>{{p.categoryTitle}}</td>

@@ -24,4 +24,8 @@ public class User {
 //	@OneToMany(mappedBy = "user")
 //	private List<Advertisement> advertisements = new ArrayList<>();
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
+	private List<Feedback> feedbackList = new ArrayList<>();
+	
 }

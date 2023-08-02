@@ -1,0 +1,28 @@
+<div>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Категория</td>
+            <td>Владелец</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in product">
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.categoryTitle}}</td>
+            <td>{{p.userName}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form novalidate ng-submit="functionFeedback()">
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="feedback" placeholder="" ng-model="text">
+            <label for="feedback">Оставить отзыв</label>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Отправить</button>
+    </form>
+
+</div>

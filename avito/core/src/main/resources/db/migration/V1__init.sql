@@ -26,3 +26,9 @@ create table advertisement_users (
 );
 
 insert into advertisement_users (username) values ('bob'), ('john');
+
+create table users_feedback (
+    id              bigserial primary key,
+    user_id         bigserial,
+    text            varchar(255)
+);
