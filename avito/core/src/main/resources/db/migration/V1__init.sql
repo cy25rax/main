@@ -9,7 +9,8 @@ create table advertisement (
 );
 
 insert into advertisement (title, price, category_id, user_id) values
-('Milk', 80, 1, 1), ('Bread', 25, 2, 1), ('Cheese', 300, 2, 2);
+('Pants', 80, 1, 1), ('Shirt', 25, 2, 1), ('Cap', 300, 2, 1),
+('Chair', 120, 3, 2), ('Lada 2101', 500, 4, 2), ('Mirror', 20, 3, 1);
 
 create table categories (
     id              bigserial primary key,
@@ -18,7 +19,7 @@ create table categories (
     updated_at      timestamp default current_timestamp
 );
 
-insert into categories (title) values ('Food'), ('Others');
+insert into categories (title) values ('Clothes'), ('Others'), ('Furniture'), ('Car');
 
 create table advertisement_users (
     id              bigserial primary key,

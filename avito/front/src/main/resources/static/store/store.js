@@ -13,5 +13,12 @@ angular.module('market').controller('storeController', function ($scope, $http, 
         });
     }
 
+    $scope.functionFindByName = function () {
+        $http.get(contextPath + '/core/advertisement?title=' + $scope.text).then(function (response) {
+            $scope.productsList = response.data;
+        });
+    }
+
+
     $scope.loadProducts();
 });

@@ -20,6 +20,12 @@ angular.module('market').controller('profileController', function ($scope, $http
         });
     }
 
+    $scope.deleteAdvert = function (id) {
+        $http.get(contextPath + "/del/" + id).then(function (response) {
+            $scope.profile = response.data;
+        });
+    }
+
     $scope.loadProfile();
     $scope.loadFeedbackList();
 });
